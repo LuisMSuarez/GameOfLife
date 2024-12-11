@@ -23,6 +23,11 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(GameOfLife
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        fish.h fish.cpp
+        shark.h shark.cpp
+        world.h world.cpp
+        creature.h creature.cpp
+        cell.h cell.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET GameOfLife APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
