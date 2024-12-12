@@ -3,12 +3,15 @@
 
 Cell::Cell()
 {
-
+    m_creature = nullptr;
 }
 
 Cell::~Cell()
 {
-    delete m_creature;
+    if (m_creature != nullptr)
+    {
+        delete m_creature;
+    }
 }
 
 Creature* Cell::getCreature()

@@ -9,6 +9,15 @@ World::~World()
 {
 }
 
+void World::initialize(uint32_t rowCount, uint32_t colCount)
+{
+    for (auto cellIterator = m_map.begin(); cellIterator != m_map.end(); cellIterator++)
+    {
+        cellIterator->destroyCreature();
+    }
+    m_map.resize(rowCount*colCount);
+}
+
 Cell& World::operator()(const uint32_t row, const uint32_t col)
 {
     return m_map[IX(row,col)];

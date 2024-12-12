@@ -12,6 +12,7 @@ class World
     public:
         World();
         ~World();
+        void initialize(uint32_t rowCount, uint32_t colCount);
         Cell &operator()(const uint32_t row, const uint32_t col);
         std::int32_t rowCount() const noexcept;
         std::int32_t colCount() const noexcept;

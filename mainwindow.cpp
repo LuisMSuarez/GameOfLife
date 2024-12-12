@@ -4,12 +4,17 @@
 #include <QGridLayout>
 #include <QLabel>
 #include <QPixmap>
+#include "fish.h"
+#include "shark.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    Fish::s_reproductionAge = 10;
+    m_game.newWorld(10, 10);
 
     // Display 4 images in a 2x2 grid
     QStringList imagePaths =
@@ -22,13 +27,13 @@ MainWindow::MainWindow(QWidget *parent)
 
    int row = 0;
    int col = 0;
-   for (int row = 0; row< 25; row++)
+   for (int row = 0; row< 10; row++)
    {
-        for(int col = 0; col<25; col++)
+        for(int col = 0; col<10; col++)
         {
            QLabel *imageLabel = new QLabel();
            QPixmap pixmap(imagePaths[0]);
-           imageLabel->setPixmap(pixmap.scaled(30, 30, Qt::KeepAspectRatio)); // Adjust size as needed
+           imageLabel->setPixmap(pixmap.scaled(50, 50, Qt::KeepAspectRatio)); // Adjust size as needed
            ui->gridLayout->addWidget(imageLabel, row, col);
         }
    }
