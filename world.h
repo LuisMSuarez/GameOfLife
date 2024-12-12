@@ -12,6 +12,13 @@ class World
     public:
         World();
         ~World();
+        Cell &operator()(const uint32_t row, const uint32_t col);
+        std::int32_t rowCount() const noexcept;
+        std::int32_t colCount() const noexcept;
+        std::vector<Cell>::iterator begin() noexcept;
+        std::vector<Cell>::iterator end() noexcept;
+        std::vector<Cell>::const_iterator cbegin();
+        std::vector<Cell>::const_iterator cend();
     private:
         // variables
         uint32_t m_cols;

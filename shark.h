@@ -5,5 +5,6 @@
 class Shark : public Creature
 {
     public:
-        Shark(World *world, int reproductionTime);
+        Shark(World *world, int reproductionAge, int maxAge);
+        void tick() override;
 };

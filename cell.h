@@ -8,7 +8,8 @@ class Cell
     public:
         Cell();
         ~Cell();
-
+        Creature *getCreature();
+        void destroyCreature();
     private:
         Creature *m_creature;
 };

@@ -5,5 +5,6 @@
 class Fish : public Creature
 {
     public:
-        Fish(World *world, int reproductionTime);
+        Fish(World *world, int reproductionAge, int maxAge);
+        void tick() override;
 };

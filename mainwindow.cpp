@@ -22,19 +22,15 @@ MainWindow::MainWindow(QWidget *parent)
 
    int row = 0;
    int col = 0;
-   for (const QString &imagePath : imagePaths)
+   for (int row = 0; row< 25; row++)
    {
-       QLabel *imageLabel = new QLabel();
-       QPixmap pixmap(imagePath);
-       imageLabel->setPixmap(pixmap.scaled(200, 200, Qt::KeepAspectRatio)); // Adjust size as needed
-       ui->gridLayout->addWidget(imageLabel, row, col);
-
-       col++;
-       if (col == 2)
-       {
-           col = 0;
-           row++;
-       }
+        for(int col = 0; col<25; col++)
+        {
+           QLabel *imageLabel = new QLabel();
+           QPixmap pixmap(imagePaths[0]);
+           imageLabel->setPixmap(pixmap.scaled(30, 30, Qt::KeepAspectRatio)); // Adjust size as needed
+           ui->gridLayout->addWidget(imageLabel, row, col);
+        }
    }
 }
 
