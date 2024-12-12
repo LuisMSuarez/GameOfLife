@@ -8,10 +8,12 @@ Cell::Cell()
 
 Cell::~Cell()
 {
-    if (m_creature != nullptr)
-    {
-        delete m_creature;
-    }
+    destroyCreature();
+}
+
+void Cell::addCreature(Creature *creature)
+{
+    m_creature = creature;
 }
 
 Creature* Cell::getCreature()

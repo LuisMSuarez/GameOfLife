@@ -7,6 +7,10 @@ World::World()
 
 World::~World()
 {
+    for (auto cellIterator = m_map.begin(); cellIterator != m_map.end(); cellIterator++)
+    {
+        cellIterator->destroyCreature();
+    }
 }
 
 void World::initialize(uint32_t rowCount, uint32_t colCount)
@@ -16,6 +20,8 @@ void World::initialize(uint32_t rowCount, uint32_t colCount)
         cellIterator->destroyCreature();
     }
     m_map.resize(rowCount*colCount);
+    m_rows = rowCount;
+    m_cols = colCount;
 }
 
 Cell& World::operator()(const uint32_t row, const uint32_t col)

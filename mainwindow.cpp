@@ -14,7 +14,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     Fish::s_reproductionAge = 10;
+    Fish::s_maxAge = 35;
     m_game.newWorld(10, 10);
+    m_game.addFish(10);
 
     // Display 4 images in a 2x2 grid
     QStringList imagePaths =
@@ -27,14 +29,18 @@ MainWindow::MainWindow(QWidget *parent)
 
    int row = 0;
    int col = 0;
-   for (int row = 0; row< 10; row++)
+   auto world = m_game.getWorld();
+   for (int row = 0; row<10; row++)
    {
-        for(int col = 0; col<10; col++)
+        for (int col = 0; col<10; col++)
         {
-           QLabel *imageLabel = new QLabel();
-           QPixmap pixmap(imagePaths[0]);
-           imageLabel->setPixmap(pixmap.scaled(50, 50, Qt::KeepAspectRatio)); // Adjust size as needed
-           ui->gridLayout->addWidget(imageLabel, row, col);
+            if (auto creature = (*world)(row,col).getCreature(); creature != nullptr)
+            {
+                QLabel *imageLabel = new QLabel();
+                QPixmap pixmap(imagePaths[0]);
+                imageLabel->setPixmap(pixmap.scaled(50, 50, Qt::KeepAspectRatio)); // Adjust size as needed
+                ui->gridLayout->addWidget(imageLabel, row, col);
+            }
         }
    }
 }
