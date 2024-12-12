@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "game.h"
+#include "world.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -18,6 +18,6 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    Game m_game;
+    World m_world;
 };
 #endif // MAINWINDOW_H

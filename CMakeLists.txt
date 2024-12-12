@@ -28,7 +28,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         world.h world.cpp
         creature.h creature.cpp
         cell.h cell.cpp
-        game.h game.cpp
+
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET GameOfLife APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

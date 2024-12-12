@@ -1,4 +1,7 @@
 #include "world.h"
+#include <algorithm>
+#include <random>
+#include "fish.h"
 
 World::World()
 {
@@ -7,9 +10,9 @@ World::World()
 
 World::~World()
 {
-    for (auto cellIterator = m_map.begin(); cellIterator != m_map.end(); cellIterator++)
+    for (auto& cell: m_map)
     {
-        cellIterator->destroyCreature();
+        cell.destroyCreature();
     }
 }
 
@@ -37,6 +40,58 @@ std::int32_t World::rowCount() const noexcept
 std::int32_t World::colCount() const noexcept
 {
     return m_cols;
+}
+
+void World::tick()
+{
+    for (auto cellIterator = m_map.begin(); cellIterator != m_map.end(); cellIterator++)
+    {
+        if (auto creature = cellIterator->getCreature(); creature != nullptr)
+        {
+            if (creature->reachedMaxAge())
+            {
+               cellIterator->destroyCreature();
+            }
+            else
+            {
+                creature->tick();
+            }
+        }
+    }
+}
+
+std::vector<Cell*> World::getFreeCellsShuffled()
+{
+    std::vector<Cell*> freeCells;
+    for (auto cellIterator= m_map.begin(); cellIterator!=m_map.end(); cellIterator++)
+    {
+        if (auto creature = cellIterator->getCreature(); creature == nullptr)
+        {
+            freeCells.push_back(&(*cellIterator));
+        }
+    }
+
+    // Create a random number generator
+    std::random_device rd;
+    std::mt19937 g(rd());
+
+    // Shuffle the vector
+    std::shuffle(freeCells.begin(), freeCells.end(), g);
+
+    return freeCells;
+}
+
+void World::addFish(uint32_t numFish)
+{
+    auto freeCells = getFreeCellsShuffled();
+
+    for (int i= 1; i<= numFish; i++)
+    {
+        Fish *f = new Fish(this, Fish::s_reproductionAge, Fish::s_maxAge);
+        auto cell = freeCells.back();
+        cell->addCreature(f);
+        freeCells.pop_back();
+    }
 }
 
 std::vector<Cell>::iterator World::begin() noexcept

@@ -13,9 +13,16 @@ class World
         World();
         ~World();
         void initialize(uint32_t rowCount, uint32_t colCount);
-        Cell &operator()(const uint32_t row, const uint32_t col);
+        Cell& operator()(const uint32_t row, const uint32_t col);
+
+        void tick();
+        void newWorld(uint32_t rowCount, uint32_t colCount);
+        void addFish(uint32_t numFish);
+        void addSharks(uint32_t numSharks);
         std::int32_t rowCount() const noexcept;
         std::int32_t colCount() const noexcept;
+
+        // iterator access
         std::vector<Cell>::iterator begin() noexcept;
         std::vector<Cell>::iterator end() noexcept;
         std::vector<Cell>::const_iterator cbegin();
@@ -28,4 +35,5 @@ class World
 
         // methods
         [[nodiscard]] constexpr std::size_t IX(const uint32_t row, const uint32_t col) const noexcept;
+        std::vector<Cell*> getFreeCellsShuffled();
 };
