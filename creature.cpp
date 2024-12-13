@@ -7,6 +7,10 @@ Creature::Creature(World *world, uint32_t reproductionAge, uint32_t maxAge) :
 
 }
 
+Creature::~Creature()
+{
+}
+
 void Creature::tick()
 {
     m_age++;

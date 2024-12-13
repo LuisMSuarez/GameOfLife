@@ -10,6 +10,7 @@ class Creature
 {
     public:
         Creature(World *world, uint32_t reproductionAge, uint32_t maxAge);
+        ~Creature();
         virtual void tick();
         bool reachedMaxAge();
     protected:

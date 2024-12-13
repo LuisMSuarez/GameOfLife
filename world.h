@@ -4,6 +4,7 @@
 #include <cstddef>   // std::size_t
 #include <cstdint>   // std::int*_t
 #include "cell.h"
+#include "creatureType.h"
 
 class Cell;
 
@@ -17,8 +18,7 @@ class World
 
         void tick();
         void newWorld(uint32_t rowCount, uint32_t colCount);
-        void addFish(uint32_t numFish);
-        void addSharks(uint32_t numSharks);
+        void addCreatures(CreatureType type, uint32_t count);
         std::int32_t rowCount() const noexcept;
         std::int32_t colCount() const noexcept;
 

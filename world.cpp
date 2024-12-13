@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <random>
 #include "fish.h"
+#include "shark.h"
 
 World::World()
 {
@@ -10,7 +11,7 @@ World::World()
 
 World::~World()
 {
-    for (auto& cell: m_map)
+    for (auto &cell: m_map)
     {
         cell.destroyCreature();
     }
@@ -18,9 +19,9 @@ World::~World()
 
 void World::initialize(uint32_t rowCount, uint32_t colCount)
 {
-    for (auto cellIterator = m_map.begin(); cellIterator != m_map.end(); cellIterator++)
+    for (auto &cell : m_map)
     {
-        cellIterator->destroyCreature();
+        cell.destroyCreature();
     }
     m_map.resize(rowCount*colCount);
     m_rows = rowCount;
@@ -44,13 +45,13 @@ std::int32_t World::colCount() const noexcept
 
 void World::tick()
 {
-    for (auto cellIterator = m_map.begin(); cellIterator != m_map.end(); cellIterator++)
+    for (auto &cell : m_map)
     {
-        if (auto creature = cellIterator->getCreature(); creature != nullptr)
+        if (auto creature = cell.getCreature(); creature != nullptr)
         {
             if (creature->reachedMaxAge())
             {
-               cellIterator->destroyCreature();
+               cell.destroyCreature();
             }
             else
             {
@@ -63,11 +64,11 @@ void World::tick()
 std::vector<Cell*> World::getFreeCellsShuffled()
 {
     std::vector<Cell*> freeCells;
-    for (auto cellIterator= m_map.begin(); cellIterator!=m_map.end(); cellIterator++)
+    for (auto &cell : m_map)
     {
-        if (auto creature = cellIterator->getCreature(); creature == nullptr)
+        if (auto creature = cell.getCreature(); creature == nullptr)
         {
-            freeCells.push_back(&(*cellIterator));
+            freeCells.push_back(&cell);
         }
     }
 
@@ -81,15 +82,29 @@ std::vector<Cell*> World::getFreeCellsShuffled()
     return freeCells;
 }
 
-void World::addFish(uint32_t numFish)
+void World::addCreatures(CreatureType type, uint32_t count)
 {
+    Creature *newCreature = nullptr;
     auto freeCells = getFreeCellsShuffled();
 
-    for (int i= 1; i<= numFish; i++)
+    for (int i= 1; i<= count; i++)
     {
-        Fish *f = new Fish(this, Fish::s_reproductionAge, Fish::s_maxAge);
+        if (freeCells.size() < 1)
+        {
+            break;
+        }
+
         auto cell = freeCells.back();
-        cell->addCreature(f);
+        switch(type)
+        {
+            case CreatureType::fish:
+                newCreature = new Fish(this, Fish::s_reproductionAge, Fish::s_maxAge);
+            break;
+            case CreatureType::shark:
+                newCreature = new Shark(this, Shark::s_reproductionAge, Shark::s_maxAge);
+            break;
+        }
+        cell->addCreature(newCreature);
         freeCells.pop_back();
     }
 }

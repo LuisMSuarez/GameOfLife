@@ -28,6 +28,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         world.h world.cpp
         creature.h creature.cpp
         cell.h cell.cpp
+        creatureType.h
 
     )
 # Define target properties for Android with Qt 6 as:
