@@ -9,17 +9,18 @@ class Cell;
 class Creature
 {
     public:
-        Creature(World *world, int reproductionAge, int maxAge);
+        Creature(World *world, uint32_t reproductionAge, uint32_t maxAge);
+        ~Creature();
         virtual void tick();
         bool reachedMaxAge();
     protected:
         bool reachedTimeToReproduce();
         void resetTimeToReproduce();
     private:
-        int m_reproduction_age;
-        int m_age;
-        int m_max_age;
-        int m_timeToReproduce;
+        uint32_t m_reproduction_age;
+        uint32_t m_age;
+        uint32_t m_max_age;
+        uint32_t m_timeToReproduce;
         World *m_world;
         Cell *m_cell;
 };
