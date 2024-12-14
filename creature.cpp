@@ -1,7 +1,7 @@
 #include "creature.h"
 
-Creature::Creature(World *world, Cell* cell, uint32_t reproductionAge, uint32_t maxAge, uint32_t age) :
-    m_world(world), m_cell(cell), m_reproduction_age(reproductionAge), m_max_age(maxAge)
+Creature::Creature(World &world, Cell &cell, uint32_t reproductionAge, uint32_t maxAge, uint32_t age) :
+    m_world(&world), m_cell(&cell), m_reproduction_age(reproductionAge), m_max_age(maxAge)
 {
     m_age = age;
 }

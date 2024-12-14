@@ -1,6 +1,6 @@
 #include "shark.h"
 
-Shark::Shark(World *world, Cell *cell, uint32_t reproductionAge, uint32_t maxAge)
+Shark::Shark(World &world, Cell &cell, uint32_t reproductionAge, uint32_t maxAge)
     : Creature(world, cell, reproductionAge, maxAge)
 {
 }

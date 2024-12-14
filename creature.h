@@ -9,7 +9,7 @@ class Cell;
 class Creature
 {
     public:
-        Creature(World *world, Cell *cell, uint32_t reproductionAge, uint32_t maxAge, uint32_t age = 0);
+        Creature(World &world, Cell &cell, uint32_t reproductionAge, uint32_t maxAge, uint32_t age = 0);
         ~Creature();
         virtual void tick();
         bool reachedMaxAge();
