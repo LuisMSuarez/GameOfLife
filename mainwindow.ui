@@ -24,9 +24,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>0</y>
+      <y>50</y>
       <width>781</width>
-      <height>531</height>
+      <height>481</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
@@ -37,6 +37,19 @@
       <number>0</number>
      </property>
     </layout>
+   </widget>
+   <widget class="QPushButton" name="pushButtonTick">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>0</y>
+      <width>106</width>
+      <height>38</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Tick</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

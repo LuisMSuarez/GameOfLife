@@ -9,7 +9,7 @@ class Cell;
 class Creature
 {
     public:
-        Creature(World *world, uint32_t reproductionAge, uint32_t maxAge);
+        Creature(World *world, Cell *cell, uint32_t reproductionAge, uint32_t maxAge);
         ~Creature();
         virtual void tick();
         bool reachedMaxAge();
@@ -23,5 +23,7 @@ class Creature
         uint32_t m_timeToReproduce;
         World *m_world;
         Cell *m_cell;
+
+        std::vector<Cell*> getNeighboringCellsShuffled();
 };
 

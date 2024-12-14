@@ -23,9 +23,17 @@ void World::initialize(uint32_t rowCount, uint32_t colCount)
     {
         cell.destroyCreature();
     }
-    m_map.resize(rowCount*colCount);
     m_rows = rowCount;
     m_cols = colCount;
+    m_map.resize(m_rows*m_cols);
+
+    for (uint32_t row; row < m_rows; row++)
+    {
+        for (uint32_t col; col < m_cols; col++)
+        {
+            this->operator()(row,col).setCoordinates(row, col);
+        }
+    }
 }
 
 Cell& World::operator()(const uint32_t row, const uint32_t col)
@@ -82,6 +90,39 @@ std::vector<Cell*> World::getFreeCellsShuffled()
     return freeCells;
 }
 
+void World::checkMapCoordinatesAndAdd(uint32_t row, uint32_t col, Cell &cell, std::vector<Cell*> &list)
+{
+    if( (row >= 0) && (col >= 0) & (row < m_rows) && (col < m_cols) )
+    {
+        list.push_back(&cell);
+    }
+}
+
+std::vector<Cell*> World::getNeighboringCellsShuffled(const Cell &position)
+{
+    uint32_t row = position.getRow();
+    uint32_t col = position.getCol();
+    std::vector<Cell*> neighboringCells;
+
+    checkMapCoordinatesAndAdd(row-1, col-1, this->operator()(row-1, col-1), neighboringCells);
+    checkMapCoordinatesAndAdd(row-1, col, this->operator()(row-1, col), neighboringCells);
+    checkMapCoordinatesAndAdd(row-1, col+1, this->operator()(row-1, col+1), neighboringCells);
+    checkMapCoordinatesAndAdd(row, col+1, this->operator()(row, col+1), neighboringCells);
+    checkMapCoordinatesAndAdd(row+1, col+1, this->operator()(row+1, col+1), neighboringCells);
+    checkMapCoordinatesAndAdd(row+1, col, this->operator()(row+1, col), neighboringCells);
+    checkMapCoordinatesAndAdd(row-1, col-1, this->operator()(row-1, col-1), neighboringCells);
+    checkMapCoordinatesAndAdd(row, col-1, this->operator()(row, col-1), neighboringCells);
+
+    // Create a random number generator
+    std::random_device rd;
+    std::mt19937 g(rd());
+
+    // Shuffle the vector
+    std::shuffle(neighboringCells.begin(), neighboringCells.end(), g);
+
+    return neighboringCells;
+}
+
 void World::addCreatures(CreatureType type, uint32_t count)
 {
     Creature *newCreature = nullptr;
@@ -98,10 +139,10 @@ void World::addCreatures(CreatureType type, uint32_t count)
         switch(type)
         {
             case CreatureType::fish:
-                newCreature = new Fish(this, Fish::s_reproductionAge, Fish::s_maxAge);
+                newCreature = new Fish(this, cell, Fish::s_reproductionAge, Fish::s_maxAge);
             break;
             case CreatureType::shark:
-                newCreature = new Shark(this, Shark::s_reproductionAge, Shark::s_maxAge);
+                newCreature = new Shark(this, cell, Shark::s_reproductionAge, Shark::s_maxAge);
             break;
         }
         cell->addCreature(newCreature);
