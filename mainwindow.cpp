@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
     int rows = 5;
     int cols = 5;
     m_world.initialize(rows, cols);
-    m_world.addCreatures(CreatureType::fish, 5);
+    m_world.addCreatures(CreatureType::fish, 7);
     m_world.addCreatures(CreatureType::shark, 2);
     renderWorld();
 }

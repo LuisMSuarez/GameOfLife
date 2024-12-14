@@ -6,7 +6,7 @@
 
 World::World()
 {
-
+    m_map.clear();
 }
 
 World::~World()
@@ -27,9 +27,9 @@ void World::initialize(uint32_t rowCount, uint32_t colCount)
     m_cols = colCount;
     m_map.resize(m_rows*m_cols);
 
-    for (uint32_t row; row < m_rows; row++)
+    for (uint32_t row = 0; row < m_rows; row++)
     {
-        for (uint32_t col; col < m_cols; col++)
+        for (uint32_t col = 0; col < m_cols; col++)
         {
             this->operator()(row,col).setCoordinates(row, col);
         }
@@ -53,18 +53,30 @@ std::int32_t World::colCount() const noexcept
 
 void World::tick()
 {
+    std::vector<Creature*> creatures;
+
+    // ensure we call tick for each creature exactly once by forming
+    // a collection with all the creatures in the map, instead of by iterating through the map
+    // as we may be calling tick() on the same creature multiple times (due to movement) otherwise
     for (auto &cell : m_map)
     {
         if (auto creature = cell.getCreature(); creature != nullptr)
         {
-            if (creature->reachedMaxAge())
-            {
-               cell.destroyCreature();
-            }
-            else
-            {
-                creature->tick();
-            }
+            creatures.push_back(creature);
+        }
+    }
+
+    for (auto creature: creatures)
+    {
+        if (creature->reachedMaxAge())
+        {
+            auto &cell = creature->getCell();
+            cell.destroyCreature();
+            creature = nullptr;
+        }
+        else
+        {
+            creature->tick();
         }
     }
 }
@@ -110,7 +122,7 @@ std::vector<Cell*> World::getNeighboringCellsShuffled(const Cell &position)
     checkMapCoordinatesAndAdd(row, col+1, this->operator()(row, col+1), neighboringCells);
     checkMapCoordinatesAndAdd(row+1, col+1, this->operator()(row+1, col+1), neighboringCells);
     checkMapCoordinatesAndAdd(row+1, col, this->operator()(row+1, col), neighboringCells);
-    checkMapCoordinatesAndAdd(row-1, col-1, this->operator()(row-1, col-1), neighboringCells);
+    checkMapCoordinatesAndAdd(row+1, col-1, this->operator()(row+1, col-1), neighboringCells);
     checkMapCoordinatesAndAdd(row, col-1, this->operator()(row, col-1), neighboringCells);
 
     // Create a random number generator
