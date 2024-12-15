@@ -66,13 +66,12 @@ void World::tick()
         }
     }
 
-    for (auto creature: creatures)
+    for (const auto creature: creatures)
     {
         if (creature->reachedMaxAge())
         {
             auto &cell = creature->getCell();
             cell.destroyCreature();
-            creature = nullptr;
         }
         else
         {
@@ -148,16 +147,8 @@ void World::addCreatures(CreatureType type, uint32_t count)
         }
 
         auto cell = freeCells.back();
-        switch(type)
-        {
-            case CreatureType::fish:
-                newCreature = new Fish(this, cell, Fish::s_reproductionAge, Fish::s_maxAge);
-            break;
-            case CreatureType::shark:
-                newCreature = new Shark(this, cell, Shark::s_reproductionAge, Shark::s_maxAge);
-            break;
-        }
-        cell->addCreature(newCreature);
+        Creature& newCreature = CreatureFactory::Create(type, *this, *cell);
+        cell->addCreature(&newCreature);
         freeCells.pop_back();
     }
 }

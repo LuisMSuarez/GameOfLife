@@ -5,6 +5,7 @@
 #include <cstdint>   // std::int*_t
 #include "cell.h"
 #include "creatureType.h"
+#include "creaturefactory.h"
 
 class Cell;
 
