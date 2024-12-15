@@ -66,13 +66,12 @@ void World::tick()
         }
     }
 
-    for (auto creature: creatures)
+    for (const auto creature: creatures)
     {
         if (creature->reachedMaxAge())
         {
             auto &cell = creature->getCell();
             cell.destroyCreature();
-            creature = nullptr;
         }
         else
         {

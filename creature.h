@@ -23,9 +23,7 @@ class Creature
         uint32_t m_age;
         uint32_t m_max_age;
         uint32_t m_timeToReproduce;
-        World *m_world;
+        World &m_world;
         Cell *m_cell;
-
-        std::vector<Cell*> getNeighboringCellsShuffled();
 };
 
