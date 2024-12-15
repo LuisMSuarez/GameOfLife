@@ -4,6 +4,7 @@ Creature::Creature(World &world, Cell &cell, uint32_t reproductionAge, uint32_t 
     m_world(world), m_cell(&cell), m_reproduction_age(reproductionAge), m_max_age(maxAge)
 {
     m_age = age;
+    m_taggedForDeletion = false;
 }
 
 Creature::~Creature()
@@ -35,6 +36,17 @@ void Creature::tick()
 Cell& Creature::getCell()
 {
     return *m_cell;
+}
+
+void Creature::tagForDeletion()
+{
+    m_taggedForDeletion = true;
+    m_cell = nullptr;
+}
+
+bool Creature::isTaggedForDeletion()
+{
+    return m_taggedForDeletion;
 }
 
 bool Creature::reachedMaxAge()

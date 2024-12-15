@@ -14,16 +14,19 @@ class Creature
         virtual void tick();
         bool reachedMaxAge();
         Cell& getCell();
+        void tagForDeletion();
+        bool isTaggedForDeletion();
     protected:
         bool reachedTimeToReproduce();
         void resetTimeToReproduce();
         void moveTo(Cell &cell);
-    private:
-        uint32_t m_reproduction_age;
         uint32_t m_age;
-        uint32_t m_max_age;
-        uint32_t m_timeToReproduce;
         World &m_world;
         Cell *m_cell;
+    private:
+        uint32_t m_reproduction_age;
+        uint32_t m_max_age;
+        uint32_t m_timeToReproduce;
+        bool m_taggedForDeletion;
 };
 
