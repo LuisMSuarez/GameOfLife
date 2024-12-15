@@ -18,21 +18,6 @@ void Creature::moveTo(Cell &cell)
     m_cell = &cell;
 }
 
-void Creature::tick()
-{
-    m_age++;
-
-    auto neighboringCells = m_world.getNeighboringCellsShuffled(*m_cell);
-    for (const auto cell: neighboringCells)
-    {
-        if (cell->getCreature() == nullptr)
-        {
-            moveTo(*cell);
-            break;
-        }
-    }
-}
-
 Cell& Creature::getCell()
 {
     return *m_cell;

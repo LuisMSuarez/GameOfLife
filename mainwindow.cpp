@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    Fish::s_reproductionAge = 10;
+    Fish::s_reproductionAge = 5;
     Fish::s_maxAge = 35;
 
     int rows = 5;
