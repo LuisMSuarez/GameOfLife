@@ -4,6 +4,7 @@ Creature::Creature(World &world, Cell &cell, uint32_t reproductionAge, uint32_t 
     m_world(world), m_cell(&cell), m_reproduction_age(reproductionAge), m_max_age(maxAge)
 {
     m_age = age;
+    m_taggedForDeletion = false;
 }
 
 Creature::~Creature()
@@ -17,24 +18,20 @@ void Creature::moveTo(Cell &cell)
     m_cell = &cell;
 }
 
-void Creature::tick()
-{
-    m_age++;
-
-    auto neighboringCells = m_world.getNeighboringCellsShuffled(*m_cell);
-    for (const auto cell: neighboringCells)
-    {
-        if (cell->getCreature() == nullptr)
-        {
-            moveTo(*cell);
-            break;
-        }
-    }
-}
-
 Cell& Creature::getCell()
 {
     return *m_cell;
+}
+
+void Creature::tagForDeletion()
+{
+    m_taggedForDeletion = true;
+    m_cell = nullptr;
+}
+
+bool Creature::isTaggedForDeletion()
+{
+    return m_taggedForDeletion;
 }
 
 bool Creature::reachedMaxAge()
