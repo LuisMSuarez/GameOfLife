@@ -39,6 +39,11 @@ Creature* Cell::getCreature()
     return m_creature;
 }
 
+bool Cell::isEmpty()
+{
+    return m_creature == nullptr;
+}
+
 void Cell::removeCreature()
 {
     m_creature = nullptr;

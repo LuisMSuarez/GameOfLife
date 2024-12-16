@@ -16,13 +16,16 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    Fish::s_reproductionAge = 5;
+    Fish::s_reproductionTicks = 3;
     Fish::s_maxAge = 35;
+
+    Shark::s_reproductionTicks = 25;
+    Shark::s_maxAge = 40;
 
     int rows = 5;
     int cols = 5;
     m_world.initialize(rows, cols);
-    m_world.addCreatures(CreatureType::fish, 7);
+    m_world.addCreatures(CreatureType::fish, 10);
     m_world.addCreatures(CreatureType::shark, 2);
     renderWorld();
 }
@@ -67,12 +70,6 @@ void MainWindow::renderWorld()
             imageLabel->setPixmap(pixmap.scaled(cellWidth, cellHeight, Qt::KeepAspectRatio)); // Adjust size as needed
             ui->gridLayout->addWidget(imageLabel, row, col);
         }
-    }
-
-    for (auto widget: widgets)
-    {
-      // ui->gridLayout->removeWidget(widget);
-       //widget->setPixmap(pixmapWater.scaled(cellWidth, cellHeight, Qt::KeepAspectRatio)); // Adjust size as needed
     }
 }
 
