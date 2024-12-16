@@ -159,8 +159,7 @@ void World::addCreatures(CreatureType type, uint32_t count)
         }
 
         auto cell = freeCells.back();
-        Creature& newCreature = CreatureFactory::Create(type, *this, *cell);
-        cell->addCreature(&newCreature);
+        CreatureFactory::Create(type, *this, *cell);
         freeCells.pop_back();
     }
 }

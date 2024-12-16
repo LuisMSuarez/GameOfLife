@@ -9,7 +9,7 @@ class Cell;
 class Creature
 {
     public:
-        Creature(World &world, Cell &cell, uint32_t reproductionAge, uint32_t maxAge, uint32_t age = 0);
+        Creature(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, uint32_t age = 0);
         ~Creature();
         virtual void tick() = 0;
         bool reachedMaxAge();
@@ -21,11 +21,11 @@ class Creature
         void resetTimeToReproduce();
         void moveTo(Cell &cell);
         uint32_t m_age;
-        uint32_t m_timeToReproduce;
+        uint32_t m_reproductionTimer;
+        uint32_t m_reproductionTicks;
         World &m_world;
         Cell *m_cell;
     private:
-        uint32_t m_reproduction_age;
         uint32_t m_max_age;
         bool m_taggedForDeletion;
 };

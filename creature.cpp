@@ -1,9 +1,10 @@
 #include "creature.h"
 
-Creature::Creature(World &world, Cell &cell, uint32_t reproductionAge, uint32_t maxAge, uint32_t age) :
-    m_world(world), m_cell(&cell), m_reproduction_age(reproductionAge), m_max_age(maxAge)
+Creature::Creature(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, uint32_t age) :
+    m_world(world), m_cell(&cell), m_reproductionTicks(reproductionTicks), m_max_age(maxAge)
 {
     m_age = age;
+    m_reproductionTimer = reproductionTicks;
     m_taggedForDeletion = false;
 }
 
@@ -41,10 +42,10 @@ bool Creature::reachedMaxAge()
 
 bool Creature::reachedTimeToReproduce()
 {
-    return m_timeToReproduce <= 0;
+    return m_reproductionTimer <= 0;
 }
 
 void Creature::resetTimeToReproduce()
 {
-    m_timeToReproduce = m_reproduction_age;
+    m_reproductionTimer = m_reproductionTicks;
 }
