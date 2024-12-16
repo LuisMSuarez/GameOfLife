@@ -10,6 +10,7 @@ class Cell
         ~Cell();
         void addCreature(Creature *creature);
         Creature* getCreature();
+        bool isEmpty();
         void removeCreature();
         void destroyCreature();
         void setCoordinates(uint32_t row, uint32_t col);

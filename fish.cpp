@@ -17,16 +17,12 @@ uint32_t Fish::s_maxAge = 35;
 
 void Fish::tick()
 {
-    m_age++;
-    if (m_reproductionTimer > 0)
-    {
-        m_reproductionTimer--;
-    }
+    Creature::tick();
 
     auto neighboringCells = m_world.getNeighboringCellsShuffled(*m_cell);
     for (const auto cell: neighboringCells)
     {
-        if (cell->getCreature() == nullptr)
+        if (cell->isEmpty())
         {
             Cell *oldPosition = m_cell;
             moveTo(*cell);

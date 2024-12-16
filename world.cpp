@@ -97,7 +97,7 @@ std::vector<Cell*> World::getFreeCellsShuffled()
     std::vector<Cell*> freeCells;
     for (auto &cell : m_map)
     {
-        if (auto creature = cell.getCreature(); creature == nullptr)
+        if (cell.isEmpty())
         {
             freeCells.push_back(&cell);
         }

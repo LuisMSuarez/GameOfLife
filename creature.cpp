@@ -35,6 +35,15 @@ bool Creature::isTaggedForDeletion()
     return m_taggedForDeletion;
 }
 
+void Creature::tick()
+{
+    m_age++;
+    if (m_reproductionTimer > 0)
+    {
+        m_reproductionTimer--;
+    }
+}
+
 bool Creature::reachedMaxAge()
 {
     return m_age >= m_max_age;

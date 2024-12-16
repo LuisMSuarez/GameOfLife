@@ -15,15 +15,10 @@ uint32_t Shark::s_maxAge = 50;
 
 void Shark::tick()
 {
-    m_age++;
-    if (m_reproductionTimer > 0)
-    {
-        m_reproductionTimer--;
-    }
+    Creature::tick();
 
+    auto *oldPosition = m_cell;
     auto neighboringCells = m_world.getNeighboringCellsShuffled(*m_cell);
-    Cell *oldPosition = m_cell;
-    bool movedByEating = false;
 
     // default movement behavior for sharks is to move by eating a neighboring fish
     for (const auto cell: neighboringCells)
@@ -37,19 +32,18 @@ void Shark::tick()
                 // at the end of the tick.
                 fish->tagForDeletion();
                 moveTo(*cell);
-                movedByEating = true;
-
                 break;
             }
         }
     }
 
+    // if the shark didn't eat a fish,
     // fallback to default behavior to move to an empty neighboring cell
-    if (!movedByEating)
+    if (oldPosition == m_cell)
     {
         for (const auto cell: neighboringCells)
         {
-            if (cell->getCreature() == nullptr)
+            if (cell->isEmpty())
             {
                 moveTo(*cell);
                 break;

@@ -11,7 +11,7 @@ class Creature
     public:
         Creature(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, uint32_t age = 0);
         ~Creature();
-        virtual void tick() = 0;
+        virtual void tick();
         bool reachedMaxAge();
         Cell& getCell();
         void tagForDeletion();
