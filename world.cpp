@@ -97,7 +97,7 @@ std::vector<Cell*> World::getFreeCellsShuffled()
     std::vector<Cell*> freeCells;
     for (auto &cell : m_map)
     {
-        if (auto creature = cell.getCreature(); creature == nullptr)
+        if (cell.isEmpty())
         {
             freeCells.push_back(&cell);
         }
@@ -159,8 +159,7 @@ void World::addCreatures(CreatureType type, uint32_t count)
         }
 
         auto cell = freeCells.back();
-        Creature& newCreature = CreatureFactory::Create(type, *this, *cell);
-        cell->addCreature(&newCreature);
+        CreatureFactory::Create(type, *this, *cell);
         freeCells.pop_back();
     }
 }
