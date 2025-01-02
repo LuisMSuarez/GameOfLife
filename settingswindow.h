@@ -15,6 +15,12 @@ public:
     explicit SettingsWindow(QWidget *parent = nullptr);
     ~SettingsWindow();
 
+protected:
+    void showEvent(QShowEvent *event) override;
+
+private slots:
+    void on_buttonBox_accepted();
+
 private:
     Ui::SettingsWindow *ui;
 };
