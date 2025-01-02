@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QTimer>
 #include "world.h"
 
 QT_BEGIN_NAMESPACE
@@ -17,11 +18,12 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButtonTick_clicked();
+    void on_pushButtonStartPause_clicked();
 
 private:
     Ui::MainWindow *ui;
     World m_world;
     void renderWorld();
+    QTimer tickTimer;
 };
 #endif // MAINWINDOW_H

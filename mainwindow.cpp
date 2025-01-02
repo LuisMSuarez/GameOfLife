@@ -28,6 +28,12 @@ MainWindow::MainWindow(QWidget *parent)
     m_world.addCreatures(CreatureType::fish, 10);
     m_world.addCreatures(CreatureType::shark, 2);
     renderWorld();
+
+    QObject::connect(&tickTimer, &QTimer::timeout, [this]()
+    {
+        m_world.tick();
+        renderWorld();
+    });
 }
 
 void MainWindow::renderWorld()
@@ -79,9 +85,17 @@ MainWindow::~MainWindow()
 }
 
 
-void MainWindow::on_pushButtonTick_clicked()
+void MainWindow::on_pushButtonStartPause_clicked()
 {
-    m_world.tick();
-    renderWorld();
+    if (tickTimer.isActive())
+    {
+        ui->pushButtonStartPause->setText("Start");
+        tickTimer.stop();
+    }
+    else
+    {
+        ui->pushButtonStartPause->setText("Pause");
+        tickTimer.start(1000);
+    }
 }
 
