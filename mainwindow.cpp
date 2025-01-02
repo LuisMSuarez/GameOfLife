@@ -9,6 +9,7 @@
 #include "fish.h"
 #include "shark.h"
 #include "creatureType.h"
+#include "settingswindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -34,6 +35,8 @@ MainWindow::MainWindow(QWidget *parent)
         m_world.tick();
         renderWorld();
     });
+
+    settingsWindow = new SettingsWindow(this);
 }
 
 void MainWindow::renderWorld()
@@ -81,6 +84,7 @@ void MainWindow::renderWorld()
 
 MainWindow::~MainWindow()
 {
+    delete settingsWindow;
     delete ui;
 }
 
@@ -97,5 +101,11 @@ void MainWindow::on_pushButtonStartPause_clicked()
         ui->pushButtonStartPause->setText("Pause");
         tickTimer.start(1000);
     }
+}
+
+
+void MainWindow::on_pushButtonSettings_clicked()
+{
+    settingsWindow->exec(); // Shows the dialog modally
 }
 
