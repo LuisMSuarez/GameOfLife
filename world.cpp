@@ -56,7 +56,7 @@ void World::tick()
     std::vector<Creature*> creatures;
 
     // Step 1:: enumerate all creatures
-    // ensure we call tick for each creature exactly once by forming
+    // ensure we call tick() for each creature exactly once by forming
     // a collection with all the creatures in the map, instead of by iterating through the map
     // as we may be calling tick() on the same creature multiple times (due to movement) otherwise
     for (auto &cell : m_map)
@@ -82,6 +82,8 @@ void World::tick()
     {
         if (creature->isTaggedForDeletion())
         {
+            // we do not invoke cell.destroyCreature as this may instead delete
+            // a predator that ate this creature and is now occupying its same cell
             delete creature;
         }
         else if (creature->reachedMaxAge())

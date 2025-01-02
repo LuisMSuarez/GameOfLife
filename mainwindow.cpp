@@ -1,11 +1,11 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include "settingswindow.h"
 #include <QWidget>
 #include <QGridLayout>
 #include <QLabel>
 #include <QPixmap>
 #include <QMessageBox>
-#include <list>
 #include "fish.h"
 #include "shark.h"
 #include "creatureType.h"
@@ -34,11 +34,12 @@ MainWindow::MainWindow(QWidget *parent)
         m_world.tick();
         renderWorld();
     });
+
+    settingsWindow = new SettingsWindow(this);
 }
 
 void MainWindow::renderWorld()
 {
-    std::list<QLabel*> widgets;
     QPixmap pixmapFish("/home/luismi/Documents/repos/GameOfLife/fish.jpeg");
     QPixmap pixmapShark("/home/luismi/Documents/repos/GameOfLife/shark.jpg");
     QPixmap pixmapWater("/home/luismi/Documents/repos/GameOfLife/water.jpg");
@@ -66,7 +67,6 @@ void MainWindow::renderWorld()
                     pixmap = pixmapShark;
                     imageLabel->setProperty("cell.render", "shark.jpeg");
                 }
-                widgets.push_back(imageLabel);
             }
             else
             {
@@ -81,6 +81,7 @@ void MainWindow::renderWorld()
 
 MainWindow::~MainWindow()
 {
+    delete settingsWindow;
     delete ui;
 }
 
@@ -97,5 +98,11 @@ void MainWindow::on_pushButtonStartPause_clicked()
         ui->pushButtonStartPause->setText("Pause");
         tickTimer.start(1000);
     }
+}
+
+
+void MainWindow::on_pushButtonSettings_clicked()
+{
+   settingsWindow->exec(); // Shows the dialog modally
 }
 

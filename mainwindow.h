@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QTimer>
 #include "world.h"
+#include "settingswindow.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,9 +20,11 @@ public:
 
 private slots:
     void on_pushButtonStartPause_clicked();
+    void on_pushButtonSettings_clicked();
 
 private:
     Ui::MainWindow *ui;
+    SettingsWindow *settingsWindow;
     World m_world;
     void renderWorld();
     QTimer tickTimer;

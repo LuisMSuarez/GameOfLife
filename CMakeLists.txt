@@ -30,6 +30,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         cell.h cell.cpp
         creatureType.h
         creaturefactory.h creaturefactory.cpp
+        settingswindow.h settingswindow.cpp settingswindow.ui
+
 
     )
 # Define target properties for Android with Qt 6 as:
