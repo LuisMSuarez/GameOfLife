@@ -1,7 +1,7 @@
 #include "creature.h"
 
-Creature::Creature(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, uint32_t age) :
-    m_world(world), m_cell(&cell), m_reproductionTicks(reproductionTicks), m_max_age(maxAge)
+Creature::Creature(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, std::string resourcePath, uint32_t age) :
+    m_world(world), m_cell(&cell), m_reproductionTicks(reproductionTicks), m_resourcePath(resourcePath), m_max_age(maxAge)
 {
     m_age = age;
     m_reproductionTimer = reproductionTicks;
@@ -33,6 +33,11 @@ void Creature::tagForDeletion()
 bool Creature::isTaggedForDeletion()
 {
     return m_taggedForDeletion;
+}
+
+std::string Creature::getResourcePath()
+{
+    return m_resourcePath;
 }
 
 void Creature::tick()

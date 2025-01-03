@@ -16,10 +16,10 @@ Creature& CreatureFactory::Create(CreatureType type, World &world, Cell &cell)
     switch(type)
     {
         case CreatureType::fish:
-            newCreature = new Fish(world, cell, Fish::s_reproductionTicks, Fish::s_maxAge);
+            newCreature = new Fish(world, cell, Fish::s_reproductionTicks, Fish::s_maxAge, Fish::getResource());
         break;
         case CreatureType::shark:
-            newCreature = new Shark(world, cell, Shark::s_reproductionTicks, Shark::s_maxAge);
+            newCreature = new Shark(world, cell, Shark::s_reproductionTicks, Shark::s_maxAge, Shark::getResource());
         break;
     }
 

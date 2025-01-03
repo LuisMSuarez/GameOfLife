@@ -40,9 +40,9 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::renderWorld()
 {
-    QPixmap pixmapFish("/home/luismi/Documents/repos/GameOfLife/fish.jpeg");
-    QPixmap pixmapShark("/home/luismi/Documents/repos/GameOfLife/shark.jpg");
-    QPixmap pixmapWater("/home/luismi/Documents/repos/GameOfLife/water.jpg");
+    QPixmap pixmapFish1("/home/luismi/Documents/repos/GameOfLife/resources/fish1.jpg");
+    QPixmap pixmapShark("/home/luismi/Documents/repos/GameOfLife/resources/shark.jpg");
+    QPixmap pixmapWater("/home/luismi/Documents/repos/GameOfLife/resources/water.jpg");
 
     int rows = 5;
     int cols = 5;
@@ -59,12 +59,12 @@ void MainWindow::renderWorld()
             {
                 if (auto fish = dynamic_cast<Fish*>(creature); fish != nullptr)
                 {
-                    pixmap = pixmapFish;
+                    pixmap = QPixmap(QString::fromStdString(fish->getResourcePath()));
                     imageLabel->setProperty("cell.render", "fish.jpeg");
                 }
                 else if (auto shark = dynamic_cast<Shark*>(creature); shark != nullptr)
                 {
-                    pixmap = pixmapShark;
+                    pixmap = QPixmap(QString::fromStdString(shark->getResourcePath()));
                     imageLabel->setProperty("cell.render", "shark.jpeg");
                 }
             }

@@ -1,8 +1,8 @@
 #include "fish.h"
 
 
-Fish::Fish(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge)
-    : Creature(world, cell, reproductionTicks, maxAge)
+Fish::Fish(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, std::string resourcePath)
+    : Creature(world, cell, reproductionTicks, maxAge, resourcePath)
 {
 
 }
@@ -10,6 +10,21 @@ Fish::Fish(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge
 Fish::~Fish()
 {
 
+}
+
+std::string Fish::getResource()
+{
+    std::array<std::string, 4> resources
+        {
+            "/home/luismi/Documents/repos/GameOfLife/resources/fish1.jpg",
+            "/home/luismi/Documents/repos/GameOfLife/resources/fish2.jpg",
+            "/home/luismi/Documents/repos/GameOfLife/resources/fish3.jpg",
+            "/home/luismi/Documents/repos/GameOfLife/resources/fish4.jpg"
+        };
+
+    // Generate a random number between 0 and 3
+    int index = rand() % resources.size();
+    return resources[index];
 }
 
 uint32_t Fish::s_reproductionTicks = 10;
