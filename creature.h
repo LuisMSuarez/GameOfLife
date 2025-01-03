@@ -2,6 +2,8 @@
 
 #include "world.h"
 #include "cell.h"
+#include <string>
+#include <array>
 
 class World; // Forward declaration
 class Cell;
@@ -9,13 +11,14 @@ class Cell;
 class Creature
 {
     public:
-        Creature(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, uint32_t startingAge = 0);
+        Creature(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, std::string resourcePath, uint32_t startingAge = 0);
         ~Creature();
         virtual void tick();
         bool reachedMaxAge();
         Cell& getCell();
         void tagForDeletion();
         bool isTaggedForDeletion();
+        std::string getResourcePath();
     protected:
         bool reachedTimeToReproduce();
         void resetTimeToReproduce();
@@ -28,5 +31,6 @@ class Creature
     private:
         uint32_t m_max_age;
         bool m_taggedForDeletion;
+        std::string m_resourcePath;
 };
 
