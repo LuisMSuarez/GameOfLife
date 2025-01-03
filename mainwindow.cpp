@@ -106,3 +106,16 @@ void MainWindow::on_pushButtonSettings_clicked()
    settingsWindow->exec(); // Shows the dialog modally
 }
 
+void MainWindow::on_pushButtonAddFish_clicked()
+{
+    m_world.addCreatures(CreatureType::fish, 1);
+    renderWorld();
+}
+
+
+void MainWindow::on_pushButtonAddShark_clicked()
+{
+    m_world.addCreatures(CreatureType::shark, 1);
+    renderWorld();
+}
+

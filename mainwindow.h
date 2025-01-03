@@ -21,6 +21,8 @@ public:
 private slots:
     void on_pushButtonStartPause_clicked();
     void on_pushButtonSettings_clicked();
+    void on_pushButtonAddFish_clicked();
+    void on_pushButtonAddShark_clicked();
 
 private:
     Ui::MainWindow *ui;
