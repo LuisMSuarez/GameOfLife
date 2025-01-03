@@ -57,16 +57,9 @@ void MainWindow::renderWorld()
             QLabel *imageLabel = new QLabel();
             if (auto creature = m_world(row,col).getCreature(); creature != nullptr)
             {
-                if (auto fish = dynamic_cast<Fish*>(creature); fish != nullptr)
-                {
-                    pixmap = QPixmap(QString::fromStdString(fish->getResourcePath()));
-                    imageLabel->setProperty("cell.render", "fish.jpeg");
-                }
-                else if (auto shark = dynamic_cast<Shark*>(creature); shark != nullptr)
-                {
-                    pixmap = QPixmap(QString::fromStdString(shark->getResourcePath()));
-                    imageLabel->setProperty("cell.render", "shark.jpeg");
-                }
+                auto resource = QString::fromStdString(creature->getResourcePath());
+                pixmap = QPixmap(resource);
+                imageLabel->setProperty("cell.render", resource);
             }
             else
             {
