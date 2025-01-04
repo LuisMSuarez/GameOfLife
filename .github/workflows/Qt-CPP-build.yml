@@ -1,0 +1,33 @@
+name: C/C++ CI
+
+#https://www.kdab.com/github-actions-for-cpp-and-qt/
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+          os: [ubuntu-latest, windows-latest] # we build on GitHub-provided Windows and Linux images
+    runs-on: ${{ matrix.os }} # use value from the matrix
+    steps:
+    - name: Install dependencies (linux)
+          run: sudo apt install ninja-build
+          if: matrix.os == 'ubuntu-latest' # conditional, runs this step only on the Ubuntu runner
+    - name: Install Ninja (windows)    # Ninja is not available in GitHub-provided images,
+                                          # see https://github.com/actions/runner-images/issues/514
+          run: choco install ninja         # So let's install it through Chocolatey
+          if: matrix.os == 'windows-latest'
+    - name: Install Qt
+          uses: jurplel/install-qt-action@v3
+          with:
+            version: '6.5.2'
+    - uses: actions/checkout@v4
+    - name: Build
+          # We don't need to set up the environment variable for CMake to see Qt because the install-qt-action
+          # sets up the necessary variables automatically
+          run: cmake -S . -B build -G "Ninja Multi-Config" && cmake --build build --config Debug
