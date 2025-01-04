@@ -89,9 +89,28 @@ void MainWindow::initializeWidgets()
     }
 }
 
+void MainWindow::deleteWidgets()
+{
+    int rows = m_world.rowCount();
+    int cols = m_world.colCount();
+
+    for (int row = 0; row<rows; row++)
+    {
+        for (int col = 0; col<cols; col++)
+        {
+            auto *widget = dynamic_cast<QLabel*>(ui->gridLayout->itemAtPosition(row, col)->widget());
+            if (widget != nullptr)
+            {
+                delete widget;
+            }
+        }
+    }
+}
+
 MainWindow::~MainWindow()
 {
     delete settingsWindow;
+    deleteWidgets();
     delete ui;
 }
 

@@ -30,6 +30,7 @@ private:
     World m_world;
     void renderWorld();
     void initializeWidgets();
+    void deleteWidgets();
     QTimer tickTimer;
 };
 #endif // MAINWINDOW_H
