@@ -13,5 +13,5 @@ class CreatureFactory
 {
     public:
         CreatureFactory();
-        static Creature& Create(CreatureType type, World &world, Cell &cell);
+        static Creature& Create(CreatureType type, World &world, Cell &cell, bool randomAge = false);
 };

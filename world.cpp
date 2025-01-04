@@ -148,7 +148,7 @@ std::vector<Cell*> World::getNeighboringCellsShuffled(const Cell &position)
     return neighboringCells;
 }
 
-void World::addCreatures(CreatureType type, uint32_t count)
+void World::addCreatures(CreatureType type, uint32_t count, bool randomAge)
 {
     Creature *newCreature = nullptr;
     auto freeCells = getFreeCellsShuffled();
@@ -161,7 +161,7 @@ void World::addCreatures(CreatureType type, uint32_t count)
         }
 
         auto cell = freeCells.back();
-        CreatureFactory::Create(type, *this, *cell);
+        CreatureFactory::Create(type, *this, *cell, randomAge);
         freeCells.pop_back();
     }
 }

@@ -19,7 +19,7 @@ class World
 
         void tick();
         void newWorld(uint32_t rowCount, uint32_t colCount);
-        void addCreatures(CreatureType type, uint32_t count);
+        void addCreatures(CreatureType type, uint32_t count, bool randomAge = false);
         std::int32_t rowCount() const noexcept;
         std::int32_t colCount() const noexcept;
 

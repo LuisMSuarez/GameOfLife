@@ -1,8 +1,8 @@
 #include "fish.h"
 
 
-Fish::Fish(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge)
-    : Creature(world, cell, reproductionTicks, maxAge)
+Fish::Fish(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, uint32_t startingAge)
+    : Creature(world, cell, reproductionTicks, maxAge, startingAge)
 {
 
 }
