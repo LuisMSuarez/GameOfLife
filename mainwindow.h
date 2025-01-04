@@ -32,5 +32,6 @@ private:
     void initializeWidgets();
     void deleteWidgets();
     QTimer tickTimer;
+    int cellHeight, cellWidth;
 };
 #endif // MAINWINDOW_H

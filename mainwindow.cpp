@@ -22,8 +22,11 @@ MainWindow::MainWindow(QWidget *parent)
     Shark::s_reproductionTicks = 25;
     Shark::s_maxAge = 40;
 
-    int rows = 5;
-    int cols = 5;
+    int rows = 10;
+    int cols = 10;
+    cellHeight = this->geometry().height()/rows;
+    cellWidth = this->geometry().width()/cols;
+
     m_world.initialize(rows, cols);
     m_world.addCreatures(CreatureType::fish, 10, /* randomAge */ true);
     m_world.addCreatures(CreatureType::shark, 2, /* randomAge */ true);
@@ -46,8 +49,10 @@ void MainWindow::renderWorld()
     int rows = m_world.rowCount();
     int cols = m_world.colCount();
     //QMessageBox::information(this, "info", QString::number(ui->centralwidget->layout()->geometry().height()));
-    int cellHeight = 160; // ui->centralwidget->height()/rows;
-    int cellWidth = 160;  //ui->centralwidget->width()/cols;
+    //QMessageBox::information(this, "info", QString::number(ui->centralwidget->layout()->geometry().width()));
+
+    //int cellHeight = 160; // ui->centralwidget->height()/rows;
+    //int cellWidth = 160;  //ui->centralwidget->width()/cols;
     //int cellHeight = ui->centralwidget->layout()->geometry().height()/rows;
     //int cellWidth = ui->centralwidget->layout()->geometry().width()/cols;
 
@@ -114,7 +119,6 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
 void MainWindow::on_pushButtonStartPause_clicked()
 {
     if (tickTimer.isActive())
@@ -129,7 +133,6 @@ void MainWindow::on_pushButtonStartPause_clicked()
     }
 }
 
-
 void MainWindow::on_pushButtonSettings_clicked()
 {
    settingsWindow->exec(); // Shows the dialog modally
@@ -141,10 +144,8 @@ void MainWindow::on_pushButtonAddFish_clicked()
     renderWorld();
 }
 
-
 void MainWindow::on_pushButtonAddShark_clicked()
 {
     m_world.addCreatures(CreatureType::shark, 1);
     renderWorld();
 }
-

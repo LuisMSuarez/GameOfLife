@@ -13,12 +13,13 @@ Fish::~Fish()
 
 std::string Fish::getResource()
 {
-    std::array<std::string, 4> resources
+    std::array<std::string, 1> resources
         {
-            "/home/luismi/Documents/repos/GameOfLife/resources/fish1.jpg",
-            "/home/luismi/Documents/repos/GameOfLife/resources/fish2.jpg",
-            "/home/luismi/Documents/repos/GameOfLife/resources/fish3.jpg",
-            "/home/luismi/Documents/repos/GameOfLife/resources/fish4.jpg"
+            "/home/luismi/Documents/repos/GameOfLife/resources/fish.jpg",
+            //"/home/luismi/Documents/repos/GameOfLife/resources/fish1.jpg",
+            // "/home/luismi/Documents/repos/GameOfLife/resources/fish2.jpg",
+            // "/home/luismi/Documents/repos/GameOfLife/resources/fish3.jpg",
+            // "/home/luismi/Documents/repos/GameOfLife/resources/fish4.jpg"
         };
 
     // Generate a random number between 0 and 3
