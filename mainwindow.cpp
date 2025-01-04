@@ -27,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_world.initialize(rows, cols);
     m_world.addCreatures(CreatureType::fish, 10, /* randomAge */ true);
     m_world.addCreatures(CreatureType::shark, 2, /* randomAge */ true);
+    initializeWidgets();
     renderWorld();
 
     QObject::connect(&tickTimer, &QTimer::timeout, [this]()
@@ -40,33 +41,49 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::renderWorld()
 {
-    QPixmap pixmapFish1("/home/luismi/Documents/repos/GameOfLife/resources/fish1.jpg");
-    QPixmap pixmapShark("/home/luismi/Documents/repos/GameOfLife/resources/shark.jpg");
     QPixmap pixmapWater("/home/luismi/Documents/repos/GameOfLife/resources/water.jpg");
 
-    int rows = 5;
-    int cols = 5;
+    int rows = m_world.rowCount();
+    int cols = m_world.colCount();
     //QMessageBox::information(this, "info", QString::number(ui->centralwidget->layout()->geometry().height()));
     int cellHeight = 160; // ui->centralwidget->height()/rows;
     int cellWidth = 160;  //ui->centralwidget->width()/cols;
+    //int cellHeight = ui->centralwidget->layout()->geometry().height()/rows;
+    //int cellWidth = ui->centralwidget->layout()->geometry().width()/cols;
+
     for (int row = 0; row<rows; row++)
     {
         for (int col = 0; col<cols; col++)
         {
             QPixmap pixmap;
-            QLabel *imageLabel = new QLabel();
             if (auto creature = m_world(row,col).getCreature(); creature != nullptr)
             {
                 auto resource = QString::fromStdString(creature->getResourcePath());
                 pixmap = QPixmap(resource);
-                imageLabel->setProperty("cell.render", resource);
             }
             else
             {
                 pixmap = pixmapWater;
-                imageLabel->setProperty("cell.render", "water.jpg");
             }
-            imageLabel->setPixmap(pixmap.scaled(cellWidth, cellHeight, Qt::KeepAspectRatio)); // Adjust size as needed
+            auto *widget = dynamic_cast<QLabel*>(ui->gridLayout->itemAtPosition(row, col)->widget());
+            if (widget != nullptr)
+            {
+                widget->setPixmap(pixmap.scaled(cellWidth, cellHeight));
+            }
+        }
+    }
+}
+
+void MainWindow::initializeWidgets()
+{
+    int rows = m_world.rowCount();
+    int cols = m_world.colCount();
+
+    for (int row = 0; row<rows; row++)
+    {
+        for (int col = 0; col<cols; col++)
+        {
+            QLabel *imageLabel = new QLabel();
             ui->gridLayout->addWidget(imageLabel, row, col);
         }
     }
