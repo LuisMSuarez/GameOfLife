@@ -12,13 +12,14 @@ Shark::~Shark()
 
 std::string Shark::getResource()
 {
-    std::array<std::string, 4> resources
-        {
-            "/home/luismi/Documents/repos/GameOfLife/resources/shark1.jpg",
-            "/home/luismi/Documents/repos/GameOfLife/resources/shark2.jpg",
-            "/home/luismi/Documents/repos/GameOfLife/resources/shark3.jpg",
-            "/home/luismi/Documents/repos/GameOfLife/resources/shark4.jpg",
-        };
+    std::array<std::string, 1> resources
+    {
+        "/home/luismi/Documents/repos/GameOfLife/resources/shark.jpg",
+        //"/home/luismi/Documents/repos/GameOfLife/resources/shark1.jpg",
+        //"/home/luismi/Documents/repos/GameOfLife/resources/shark2.jpg",
+        //"/home/luismi/Documents/repos/GameOfLife/resources/shark3.jpg",
+        //"/home/luismi/Documents/repos/GameOfLife/resources/shark4.jpg",
+    };
 
     // Generate a random number between 0 and 3
     int index = rand() % resources.size();
