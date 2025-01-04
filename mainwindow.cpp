@@ -48,13 +48,6 @@ void MainWindow::renderWorld()
 
     int rows = m_world.rowCount();
     int cols = m_world.colCount();
-    //QMessageBox::information(this, "info", QString::number(ui->centralwidget->layout()->geometry().height()));
-    //QMessageBox::information(this, "info", QString::number(ui->centralwidget->layout()->geometry().width()));
-
-    //int cellHeight = 160; // ui->centralwidget->height()/rows;
-    //int cellWidth = 160;  //ui->centralwidget->width()/cols;
-    //int cellHeight = ui->centralwidget->layout()->geometry().height()/rows;
-    //int cellWidth = ui->centralwidget->layout()->geometry().width()/cols;
 
     for (int row = 0; row<rows; row++)
     {
