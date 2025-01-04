@@ -29,6 +29,7 @@ private:
     SettingsWindow *settingsWindow;
     World m_world;
     void renderWorld();
+    void initializeWidgets();
     QTimer tickTimer;
 };
 #endif // MAINWINDOW_H
