@@ -1,9 +1,8 @@
 #include "creature.h"
 
-Creature::Creature(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, uint32_t age) :
-    m_world(world), m_cell(&cell), m_reproductionTicks(reproductionTicks), m_max_age(maxAge)
+Creature::Creature(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, uint32_t startingAge) :
+    m_world(world), m_cell(&cell), m_reproductionTicks(reproductionTicks), m_max_age(maxAge), m_age(startingAge)
 {
-    m_age = age;
     m_reproductionTimer = reproductionTicks;
     m_taggedForDeletion = false;
 }

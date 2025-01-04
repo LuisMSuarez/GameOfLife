@@ -25,8 +25,8 @@ MainWindow::MainWindow(QWidget *parent)
     int rows = 5;
     int cols = 5;
     m_world.initialize(rows, cols);
-    m_world.addCreatures(CreatureType::fish, 10);
-    m_world.addCreatures(CreatureType::shark, 2);
+    m_world.addCreatures(CreatureType::fish, 10, /* randomAge */ true);
+    m_world.addCreatures(CreatureType::shark, 2, /* randomAge */ true);
     renderWorld();
 
     QObject::connect(&tickTimer, &QTimer::timeout, [this]()
