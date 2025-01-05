@@ -1,0 +1,48 @@
+name: C++/Qt CI
+
+# Based on samples from the following sources
+# https://www.kdab.com/github-actions-for-cpp-and-qt/
+# https://github.com/gvillanueva/hello-cmake-qt-github_action/blob/main/.github/workflows/cmake.yml
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Debug
+
+jobs:
+  build:
+    strategy:
+      matrix:
+          os: [ubuntu-latest, windows-latest] # we build on GitHub-provided Windows and Linux images
+    runs-on: ${{ matrix.os }} # use value from the matrix
+    steps:
+    - name: Install dependencies (linux)
+      run: sudo apt install ninja-build
+      if: matrix.os == 'ubuntu-latest' # conditional, runs this step only on the Ubuntu runner
+    - name: Install Ninja (windows)    # Ninja is not available in GitHub-provided images,
+                                          # see https://github.com/actions/runner-images/issues/514
+      run: choco install ninja         # So let's install it through Chocolatey
+      if: matrix.os == 'windows-latest'
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v4
+      with:
+            # In C++ you can obtain version by printing it out with: qDebug() << qVersion();
+            version: '6.8.1'
+    - uses: actions/checkout@v4
+    - name: Configure CMake
+          # Configure CMake in a 'build' subdirectory
+      run: cmake -S . -B build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+    - name: Build
+          # We don't need to set up the environment variable for CMake to see Qt because the install-qt-action
+          # sets up the necessary variables automatically
+      run: cmake --build build --config ${{env.BUILD_TYPE}}
+    #- name: Test
+    #  working-directory: ${{github.workspace}}/build
+        # Execute tests defined by the CMake configuration.
+        # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
+    #    run: ctest -C ${{env.BUILD_TYPE}}
