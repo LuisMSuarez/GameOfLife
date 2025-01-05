@@ -8,11 +8,16 @@ on:
   pull_request:
     branches: [ "master" ]
 
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Debug
+
 jobs:
   build:
     strategy:
       matrix:
           os: [ubuntu-latest, windows-latest] # we build on GitHub-provided Windows and Linux images
+          #os: [ubuntu-latest] # we build on GitHub-provided Windows and Linux images
     runs-on: ${{ matrix.os }} # use value from the matrix
     steps:
     - name: Install dependencies (linux)
@@ -27,7 +32,15 @@ jobs:
       with:
             version: '6.8.1'
     - uses: actions/checkout@v4
+    - name:  Configure CMake
+          # Configure CMake in a 'build' subdirectory
+      run: cmake -S . -B build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
     - name: Build
           # We don't need to set up the environment variable for CMake to see Qt because the install-qt-action
           # sets up the necessary variables automatically
-      run: cmake -S . -B build -G "Ninja Multi-Config" && cmake --build build --config Debug
+      run: cmake --build build --config ${{env.BUILD_TYPE}}
+    #- name: Test
+    #  working-directory: ${{github.workspace}}/build
+        # Execute tests defined by the CMake configuration.
+        # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
+    #    run: ctest -C ${{env.BUILD_TYPE}}
