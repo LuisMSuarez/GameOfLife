@@ -1,6 +1,8 @@
-name: C/C++ CI
+name: C++/Qt CI
 
-#https://www.kdab.com/github-actions-for-cpp-and-qt/
+# Based on samples from the following sources
+# https://www.kdab.com/github-actions-for-cpp-and-qt/
+# https://github.com/gvillanueva/hello-cmake-qt-github_action/blob/main/.github/workflows/cmake.yml
 
 on:
   push:
@@ -17,7 +19,6 @@ jobs:
     strategy:
       matrix:
           os: [ubuntu-latest, windows-latest] # we build on GitHub-provided Windows and Linux images
-          #os: [ubuntu-latest] # we build on GitHub-provided Windows and Linux images
     runs-on: ${{ matrix.os }} # use value from the matrix
     steps:
     - name: Install dependencies (linux)
@@ -30,6 +31,7 @@ jobs:
     - name: Install Qt
       uses: jurplel/install-qt-action@v4
       with:
+            # In C++ you can obtain version by printing it out with: qDebug() << qVersion();
             version: '6.8.1'
     - uses: actions/checkout@v4
     - name: Configure CMake
