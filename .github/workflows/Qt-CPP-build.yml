@@ -12,8 +12,7 @@ jobs:
   build:
     strategy:
       matrix:
-          #os: [ubuntu-latest, windows-latest] # we build on GitHub-provided Windows and Linux images
-          os: [ubuntu-latest] # we build on GitHub-provided Windows and Linux images
+          os: [ubuntu-latest, windows-latest] # we build on GitHub-provided Windows and Linux images
     runs-on: ${{ matrix.os }} # use value from the matrix
     steps:
     - name: Install dependencies (linux)
@@ -24,9 +23,9 @@ jobs:
       run: choco install ninja         # So let's install it through Chocolatey
       if: matrix.os == 'windows-latest'
     - name: Install Qt
-      uses: jurplel/install-qt-action@v3
+      uses: jurplel/install-qt-action@v4
       with:
-            version: '6.5.2'
+            version: '6.8.1'
     - uses: actions/checkout@v4
     - name: Build
           # We don't need to set up the environment variable for CMake to see Qt because the install-qt-action
