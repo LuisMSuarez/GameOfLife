@@ -22,11 +22,15 @@ MainWindow::MainWindow(QWidget *parent)
     Shark::s_reproductionTicks = 25;
     Shark::s_maxAge = 40;
 
-    int rows = 5;
-    int cols = 5;
+    int rows = 10;
+    int cols = 10;
+    cellHeight = this->geometry().height()/rows;
+    cellWidth = this->geometry().width()/cols;
+
     m_world.initialize(rows, cols);
     m_world.addCreatures(CreatureType::fish, 10, /* randomAge */ true);
     m_world.addCreatures(CreatureType::shark, 2, /* randomAge */ true);
+    initializeWidgets();
     renderWorld();
 
     QObject::connect(&tickTimer, &QTimer::timeout, [this]()
@@ -40,41 +44,63 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::renderWorld()
 {
-    QPixmap pixmapFish("/home/luismi/Documents/repos/GameOfLife/fish.jpeg");
-    QPixmap pixmapShark("/home/luismi/Documents/repos/GameOfLife/shark.jpg");
-    QPixmap pixmapWater("/home/luismi/Documents/repos/GameOfLife/water.jpg");
+    QPixmap pixmapWater("/home/luismi/Documents/repos/GameOfLife/resources/water.jpg");
 
-    int rows = 5;
-    int cols = 5;
-    //QMessageBox::information(this, "info", QString::number(ui->centralwidget->layout()->geometry().height()));
-    int cellHeight = 160; // ui->centralwidget->height()/rows;
-    int cellWidth = 160;  //ui->centralwidget->width()/cols;
+    int rows = m_world.rowCount();
+    int cols = m_world.colCount();
+
     for (int row = 0; row<rows; row++)
     {
         for (int col = 0; col<cols; col++)
         {
             QPixmap pixmap;
-            QLabel *imageLabel = new QLabel();
             if (auto creature = m_world(row,col).getCreature(); creature != nullptr)
             {
-                if (auto fish = dynamic_cast<Fish*>(creature); fish != nullptr)
-                {
-                    pixmap = pixmapFish;
-                    imageLabel->setProperty("cell.render", "fish.jpeg");
-                }
-                else if (auto shark = dynamic_cast<Shark*>(creature); shark != nullptr)
-                {
-                    pixmap = pixmapShark;
-                    imageLabel->setProperty("cell.render", "shark.jpeg");
-                }
+                auto resource = QString::fromStdString(creature->getResourcePath());
+                pixmap = QPixmap(resource);
             }
             else
             {
                 pixmap = pixmapWater;
-                imageLabel->setProperty("cell.render", "water.jpg");
             }
-            imageLabel->setPixmap(pixmap.scaled(cellWidth, cellHeight, Qt::KeepAspectRatio)); // Adjust size as needed
+            auto *widget = dynamic_cast<QLabel*>(ui->gridLayout->itemAtPosition(row, col)->widget());
+            if (widget != nullptr)
+            {
+                widget->setPixmap(pixmap.scaled(cellWidth, cellHeight));
+            }
+        }
+    }
+}
+
+void MainWindow::initializeWidgets()
+{
+    int rows = m_world.rowCount();
+    int cols = m_world.colCount();
+
+    for (int row = 0; row<rows; row++)
+    {
+        for (int col = 0; col<cols; col++)
+        {
+            QLabel *imageLabel = new QLabel();
             ui->gridLayout->addWidget(imageLabel, row, col);
+        }
+    }
+}
+
+void MainWindow::deleteWidgets()
+{
+    int rows = m_world.rowCount();
+    int cols = m_world.colCount();
+
+    for (int row = 0; row<rows; row++)
+    {
+        for (int col = 0; col<cols; col++)
+        {
+            auto *widget = dynamic_cast<QLabel*>(ui->gridLayout->itemAtPosition(row, col)->widget());
+            if (widget != nullptr)
+            {
+                delete widget;
+            }
         }
     }
 }
@@ -82,9 +108,9 @@ void MainWindow::renderWorld()
 MainWindow::~MainWindow()
 {
     delete settingsWindow;
+    deleteWidgets();
     delete ui;
 }
-
 
 void MainWindow::on_pushButtonStartPause_clicked()
 {
@@ -100,7 +126,6 @@ void MainWindow::on_pushButtonStartPause_clicked()
     }
 }
 
-
 void MainWindow::on_pushButtonSettings_clicked()
 {
    settingsWindow->exec(); // Shows the dialog modally
@@ -112,10 +137,8 @@ void MainWindow::on_pushButtonAddFish_clicked()
     renderWorld();
 }
 
-
 void MainWindow::on_pushButtonAddShark_clicked()
 {
     m_world.addCreatures(CreatureType::shark, 1);
     renderWorld();
 }
-

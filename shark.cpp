@@ -1,13 +1,29 @@
 #include "shark.h"
 #include "fish.h"
 
-Shark::Shark(World &world, Cell &cell, uint32_t reproductionTimer, uint32_t maxAge, uint32_t startingAge)
-    : Creature(world, cell, reproductionTimer, maxAge, startingAge)
+Shark::Shark(World &world, Cell &cell, uint32_t reproductionTimer, uint32_t maxAge, std::string resourcePath, uint32_t startingAge)
+    : Creature(world, cell, reproductionTimer, maxAge, resourcePath, startingAge)
 {
 }
 
 Shark::~Shark()
 {
+}
+
+std::string Shark::getResource()
+{
+    std::array<std::string, 1> resources
+    {
+        "/home/luismi/Documents/repos/GameOfLife/resources/shark.jpg",
+        //"/home/luismi/Documents/repos/GameOfLife/resources/shark1.jpg",
+        //"/home/luismi/Documents/repos/GameOfLife/resources/shark2.jpg",
+        //"/home/luismi/Documents/repos/GameOfLife/resources/shark3.jpg",
+        //"/home/luismi/Documents/repos/GameOfLife/resources/shark4.jpg",
+    };
+
+    // Generate a random number between 0 and 3
+    int index = rand() % resources.size();
+    return resources[index];
 }
 
 uint32_t Shark::s_reproductionTicks = 15;
