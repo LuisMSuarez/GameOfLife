@@ -44,7 +44,7 @@ jobs:
     - name: Archive build artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: build-directory-artifacts
+        name: build-directory-artifacts${{ matrix.os }}
         path: |
             build
     #- name: Test
