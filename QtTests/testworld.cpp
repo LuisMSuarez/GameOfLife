@@ -89,5 +89,5 @@ void TestWorld::testAddCreatures()
     QCOMPARE(fishCount, 10);
 }
 
-QTEST_MAIN(TestWorld)
+//QTEST_MAIN(TestWorld)
 #include "testworld.moc"

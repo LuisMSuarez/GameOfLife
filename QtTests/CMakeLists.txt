@@ -24,9 +24,15 @@ set(SOURCES
     ../creaturefactory.h ../creaturefactory.cpp
 )
 
-add_executable(sampletest tst_sampletest.cpp
-    testworld.cpp ${SOURCES})
+add_executable(sampletest
+    ${SOURCES}
+    tst_sampletest.cpp
+    testworld.cpp
+    testfish.cpp
+    testSuite.cpp
+)
 add_test(NAME sampletest COMMAND sampletest)
-
+#add_test(NAME TestWorld COMMAND sampletest)
+add_test(NAME TestFish COMMAND sampletest)
 target_link_libraries(sampletest PRIVATE Qt${QT_VERSION_MAJOR}::Test)
 

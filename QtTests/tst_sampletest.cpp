@@ -31,6 +31,6 @@ void sampletest::test_case1()
 
 }
 
-//QTEST_APPLESS_MAIN(sampletest)
+QTEST_APPLESS_MAIN(sampletest)
 
 #include "tst_sampletest.moc"
