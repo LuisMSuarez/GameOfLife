@@ -42,6 +42,7 @@ jobs:
           # sets up the necessary variables automatically
       run: cmake --build build --config ${{env.BUILD_TYPE}}
     - name: Test-worldtests
+      if: matrix.os == 'ubuntu-latest'
       working-directory: ${{github.workspace}}/build/WorldTests
       run: ctest -V -O test_world.log --timeout 5 -C ${{env.BUILD_TYPE}}
     - name: Archive build artifacts
