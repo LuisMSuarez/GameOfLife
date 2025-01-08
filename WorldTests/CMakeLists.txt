@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(sampletest LANGUAGES CXX)
+project(worldtests LANGUAGES CXX)
 
 enable_testing()
 
@@ -11,7 +11,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(SOURCES
@@ -24,15 +24,10 @@ set(SOURCES
     ../creaturefactory.h ../creaturefactory.cpp
 )
 
-add_executable(sampletest
+add_executable(worldtests
     ${SOURCES}
-    tst_sampletest.cpp
-    testworld.cpp
-    testfish.cpp
-    testSuite.cpp
+    test_world.cpp
 )
-add_test(NAME sampletest COMMAND sampletest)
-#add_test(NAME TestWorld COMMAND sampletest)
-add_test(NAME TestFish COMMAND sampletest)
-target_link_libraries(sampletest PRIVATE Qt${QT_VERSION_MAJOR}::Test)
+add_test(NAME worldtests COMMAND worldtests)
+target_link_libraries(worldtests PRIVATE Qt${QT_VERSION_MAJOR}::Test)
 

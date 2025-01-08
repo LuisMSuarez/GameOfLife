@@ -9,17 +9,16 @@ class TestWorld : public QObject
 {
     Q_OBJECT
 
-private slots:
-   void initTestCase();
-   void cleanupTestCase();
-   void testInitialize();
-   void testTick();
-    //void testGetFreeCellsShuffled();
-   void testGetNeighboringCellsShuffled();
-   void testAddCreatures();
+    private slots:
+       void initTestCase();
+       void cleanupTestCase();
+       void testInitialize();
+       void testTick();
+       void testGetNeighboringCellsShuffled();
+       void testAddCreatures();
 
-private:
-    World *world;
+    private:
+        World *world;
 };
 
 void TestWorld::initTestCase()
@@ -57,15 +56,6 @@ void TestWorld::testTick()
     // Check if tick has been processed (difficult to check exact state due to randomness)
 }
 
-/*
-void TestWorld::testGetFreeCellsShuffled()
-{
-    world->initialize(10, 10);
-    auto freeCells = world->getFreeCellsShuffled();
-    QCOMPARE(freeCells.size(), 100);
-}
-*/
-
 void TestWorld::testGetNeighboringCellsShuffled()
 {
     world->initialize(10, 10);
@@ -89,5 +79,6 @@ void TestWorld::testAddCreatures()
     QCOMPARE(fishCount, 10);
 }
 
-//QTEST_MAIN(TestWorld)
-#include "testworld.moc"
+QTEST_MAIN(TestWorld)
+
+#include "test_world.moc"
