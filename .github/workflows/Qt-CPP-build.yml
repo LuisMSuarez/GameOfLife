@@ -42,7 +42,7 @@ jobs:
           # sets up the necessary variables automatically
       run: cmake --build build --config ${{env.BUILD_TYPE}}
     - name: Test-worldtests
-      working-directory: ${{github.workspace}}/build/WorldTests/worldtests
+      working-directory: ${{github.workspace}}/build/WorldTests
       run: ctest -V -O test_world.log --timeout 5 -C ${{env.BUILD_TYPE}}
     - name: Archive build artifacts
       # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/storing-and-sharing-data-from-a-workflow
