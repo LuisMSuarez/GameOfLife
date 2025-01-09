@@ -2,7 +2,7 @@
 #include "fish.h"
 
 Shark::Shark(World &world, Cell &cell, uint32_t reproductionTimer, uint32_t maxAge, std::string resourcePath, uint32_t startingAge)
-    : Creature(world, cell, reproductionTimer, maxAge, resourcePath, startingAge)
+    : Creature(world, cell, reproductionTimer, maxAge, resourcePath, startingAge), m_energy(10)
 {
 }
 
@@ -28,10 +28,12 @@ std::string Shark::getResource()
 
 uint32_t Shark::s_reproductionTicks = 15;
 uint32_t Shark::s_maxAge = 50;
+uint32_t Shark::s_energyPerFish = 5;
 
 void Shark::tick()
 {
     Creature::tick();
+    loseEnergy(1); // Lose energy every tick
 
     auto *oldPosition = m_cell;
     auto neighboringCells = m_world.getNeighboringCellsShuffled(*m_cell);
@@ -48,6 +50,7 @@ void Shark::tick()
                 // at the end of the tick.
                 fish->tagForDeletion();
                 moveTo(*cell);
+                gainEnergy(s_energyPerFish); // Gain energy when eating a fish
                 break;
             }
         }
@@ -72,5 +75,25 @@ void Shark::tick()
     {
          CreatureFactory::Create(CreatureType::shark, m_world, *oldPosition);
          resetTimeToReproduce();
+    }
+
+    checkEnergy(); // Check if the shark runs out of energy
+}
+
+void Shark::gainEnergy(int amount)
+{
+    m_energy += amount;
+}
+
+void Shark::loseEnergy(int amount)
+{
+    m_energy -= amount;
+}
+
+void Shark::checkEnergy()
+{
+    if (m_energy <= 0)
+    {
+        tagForDeletion(); // The shark dies if it runs out of energy
     }
 }

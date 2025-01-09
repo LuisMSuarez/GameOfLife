@@ -33,4 +33,3 @@ class Creature
         bool m_taggedForDeletion;
         std::string m_resourcePath;
 };
-
