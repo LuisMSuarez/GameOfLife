@@ -1,7 +1,11 @@
 #pragma once
 
+/**
+ * @enum CreatureType
+ * @brief Enum representing the type of creature.
+ */
 enum CreatureType
 {
-    fish,
-    shark
+    fish, /**< Represents a fish. */
+    shark /**< Represents a shark. */
 };
