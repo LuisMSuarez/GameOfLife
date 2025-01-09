@@ -33,7 +33,11 @@ jobs:
       with:
             # In C++ you can obtain version by printing it out with: qDebug() << qVersion();
             version: '6.8.1'
-            modules: 'qttest'
+    - name: Install QtTest (windows)
+      run: |
+          choco install qt6-sdk
+          set PATH=C:\tools\qt6\bin;%PATH%
+      if: matrix.os == 'windows-latest'
     - uses: actions/checkout@v4
     - name: Configure CMake
           # Configure CMake in a 'build' subdirectory
