@@ -35,8 +35,8 @@ jobs:
             version: '6.8.1'
     - name: Install QtTest (windows)
       run: |
-          choco install qt6-sdk
-          set PATH=C:\tools\qt6\bin;%PATH%
+          choco install qt5-sdk
+          set PATH=C:\tools\qt5\bin;%PATH%
       if: matrix.os == 'windows-latest'
     - uses: actions/checkout@v4
     - name: Configure CMake
