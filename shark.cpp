@@ -2,7 +2,7 @@
 #include "fish.h"
 
 Shark::Shark(World &world, Cell &cell, uint32_t reproductionTimer, uint32_t maxAge, std::string resourcePath, uint32_t startingAge)
-    : Creature(world, cell, reproductionTimer, maxAge, resourcePath, startingAge), m_energy(10)
+    : Creature(world, cell, reproductionTimer, maxAge, resourcePath, startingAge), m_energy(s_initialEnergy)
 {
 }
 
@@ -28,6 +28,7 @@ std::string Shark::getResource()
 
 uint32_t Shark::s_reproductionTicks = 15;
 uint32_t Shark::s_maxAge = 50;
+uint32_t Shark::s_initialEnergy = 5;
 uint32_t Shark::s_energyPerFish = 5;
 
 void Shark::tick()

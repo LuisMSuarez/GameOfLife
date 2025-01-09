@@ -10,6 +10,7 @@ class Shark : public Creature
         void tick() override;
         static uint32_t s_reproductionTicks;
         static uint32_t s_maxAge;
+        static uint32_t s_initialEnergy;
         static uint32_t s_energyPerFish;
         static std::string getResource();
 
