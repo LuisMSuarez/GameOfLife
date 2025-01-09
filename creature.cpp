@@ -1,3 +1,4 @@
+#include <cassert>    // assert
 #include "creature.h"
 
 Creature::Creature(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, std::string resourcePath, uint32_t startingAge) :
@@ -13,6 +14,7 @@ Creature::~Creature()
 
 void Creature::moveTo(Cell &cell)
 {
+    assert(cell.getCreature() == nullptr); // the destination cell must not already be occupied by another creature
     m_cell->removeCreature();
     cell.addCreature(this);
     m_cell = &cell;
@@ -25,6 +27,7 @@ Cell& Creature::getCell()
 
 void Creature::tagForDeletion()
 {
+    m_cell->removeCreature();
     m_taggedForDeletion = true;
     m_cell = nullptr;
 }
