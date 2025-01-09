@@ -33,7 +33,7 @@ jobs:
       with:
             # In C++ you can obtain version by printing it out with: qDebug() << qVersion();
             version: '6.8.1'
-            modules: 'qttests'
+            modules: 'qttest'
     - uses: actions/checkout@v4
     - name: Configure CMake
           # Configure CMake in a 'build' subdirectory
