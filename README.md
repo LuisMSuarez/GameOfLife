@@ -1,7 +1,17 @@
 Implementation of the popular [Wa-Tor simulation](https://en.wikipedia.org/wiki/Wa-Tor) on C++ and Qt (cute).
 My dev box was SuSE Linux tubleweed, however due to Qt's cross-platform design, the code can be recompiled in other platforms such as Windows and MacOS.
 
+Main technical specs of this project:
+- C++/Qt
+- Cross-platform
+- Contains suite of automated tests using Qt Tests
+- CI build pipeline using github actions using YAML
+
 This simulation takes place in a n x m grid of cells (the “world”), where sharks and fish (“creatures”) coexist by moving, breeding and acting as predators/preys.  The point of the simulation is to watch how the world evolves based on how you tweak the starting parameters, such as size, starting number of sharks and fish, and breeding, lifetime intervals.
+
+Below is a screenshot of the main window:
+![image](https://github.com/user-attachments/assets/c5ee8d17-1947-472b-9d62-66e263c0861c)
+
 In the original definition of the game, the world takes a toroid shape, where the top and bottom edges are connected, and also the left and right edges.  
 
 I found that for the end-user that is watching the simulation, these rules are not very intuitive, so I chose to treat the world as a box enclosure where the edges are barriers.  That being said, in my implementation it is easy enough to fall back to the original definition.
