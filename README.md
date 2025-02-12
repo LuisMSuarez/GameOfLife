@@ -1,7 +1,18 @@
 Implementation of the popular [Wa-Tor simulation](https://en.wikipedia.org/wiki/Wa-Tor) on C++ and Qt (cute).
 My dev box was SuSE Linux tubleweed, however due to Qt's cross-platform design, the code can be recompiled in other platforms such as Windows and MacOS.
 
+Main technical specs of this project:
+- C++/Qt
+- Type: Game/simulation
+- Cross-platform
+- Contains suite of automated tests using Qt Tests
+- CI build pipeline using github actions using YAML
+
 This simulation takes place in a n x m grid of cells (the “world”), where sharks and fish (“creatures”) coexist by moving, breeding and acting as predators/preys.  The point of the simulation is to watch how the world evolves based on how you tweak the starting parameters, such as size, starting number of sharks and fish, and breeding, lifetime intervals.
+
+Below is a screenshot of the main window:
+![image](https://github.com/user-attachments/assets/c5ee8d17-1947-472b-9d62-66e263c0861c)
+
 In the original definition of the game, the world takes a toroid shape, where the top and bottom edges are connected, and also the left and right edges.  
 
 I found that for the end-user that is watching the simulation, these rules are not very intuitive, so I chose to treat the world as a box enclosure where the edges are barriers.  That being said, in my implementation it is easy enough to fall back to the original definition.
@@ -16,3 +27,5 @@ For the Qt widget app, I used a QtGridLayout.  Each position in the grid matches
 
 As I spent time on this project, I recalled some realtime strategy games I played years ago, such as “StarCraft” and “Warcraft”. While these games are obviously much more complex, with multiplayer, 3D worlds, fog of war, map traversal using A*, etc, many of the basic building blocks should be applicable.  Likewise, my 2D presentation layer with widgets could also be re-written using a more capable engine such as Unity, OpenGL or Direct X, but that was beyond the scope I had in mind for my project.
 I was very pleased with the outcome I achieved, both from my learnings of Qt and Qt creator, but also making good use of C++ features such as algorithms, references, pointers, object oriented programming, etc.  I was able to make some enhancements to my implementation of the simulation, such as assigning distinct images to the various individual creatures, making it easier to track each individual in the grid, as opposed to using the same image for all.
+
+In this project, I also utilized AI-assisted code generation, such as to auto-generate doxygen comments for all header files, and to create test cases for various classes.  For this, I used GitHub Copilot, and I was very pleased with the outcome, being able to quickly accomplish these tasks.  In the case of code comments, the output from the AI assistant required little to no change.  In the case of test case generation, the output was also very impressive, but I consider that it is still necessary for the developer to review the code paths and types of test cases being generated and fill out any gaps.
