@@ -30,4 +30,3 @@ add_executable(worldtests
 )
 add_test(NAME worldtests COMMAND worldtests)
 target_link_libraries(worldtests PRIVATE Qt${QT_VERSION_MAJOR}::Test)
-

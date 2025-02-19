@@ -77,4 +77,5 @@ install(TARGETS GameOfLife
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(GameOfLife)
 endif()
-add_subdirectory(Tests)
+add_subdirectory(WorldTests)
+add_subdirectory(SharkTests)
