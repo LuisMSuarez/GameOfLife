@@ -11,11 +11,21 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(shark test_shark.cpp)
-add_test(NAME shark COMMAND shark)
+set(SOURCES
+    ../fish.h ../fish.cpp
+    ../shark.h ../shark.cpp
+    ../world.h ../world.cpp
+    ../creature.h ../creature.cpp
+    ../cell.h ../cell.cpp
+    ../creatureType.h
+    ../creaturefactory.h ../creaturefactory.cpp
+)
 
-target_link_libraries(shark PRIVATE Qt${QT_VERSION_MAJOR}::Test)
+add_executable(sharktests ${SOURCES} test_shark.cpp)
+add_test(NAME sharktests COMMAND sharktests)
+
+target_link_libraries(sharktests PRIVATE Qt${QT_VERSION_MAJOR}::Test)
 
