@@ -2,6 +2,8 @@
 #include "../shark.h"
 #include "../world.h"
 #include "../cell.h"
+#include "../creaturefactory.h"
+#include "../creatureType.h"
 
 class TestShark : public QObject
 {
@@ -14,18 +16,28 @@ private slots:
     //void testGainEnergy();
     //void testLoseEnergy();
     //void testCheckEnergy();
-
+    void cleanupTestCase();
 private:
     World* world;
     Cell* cell;
     Shark* shark;
 };
 
+// Run once before any of the tests in the class executes.
+// This ensures that each test run starts with a clean slate and avoids interference between tests.
 void TestShark::initTestCase()
 {
     world = new World();
     cell = new Cell();
-    shark = new Shark(*world, *cell, 15, 50, "/resources/shark.jpg", 0);
+    shark = static_cast<Shark*>(&CreatureFactory::Create(CreatureType::shark, *world, *cell));
+}
+
+// special function within a test class that is executed once after all test functions in that class have completed.
+// It serves the purpose of cleaning up resources or states that were set up in the
+void TestShark::cleanupTestCase()
+{
+    delete cell;  // internally will destroy the creature
+    delete world;
 }
 
 void TestShark::testGetResource()
