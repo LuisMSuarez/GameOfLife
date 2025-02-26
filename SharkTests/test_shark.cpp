@@ -13,9 +13,6 @@ private slots:
     void initTestCase();
     void testGetResource();
     void testTick();
-    //void testGainEnergy();
-    //void testLoseEnergy();
-    //void testCheckEnergy();
     void cleanupTestCase();
 private:
     World* world;
@@ -58,29 +55,6 @@ void TestShark::testTick()
 
     // Add more test cases for various tick scenarios
 }
-
-/*
-void TestShark::testGainEnergy()
-{
-    // int initialEnergy = shark->getEnergy();
-    shark->gainEnergy(10);
-    QCOMPARE(shark->getEnergy(), initialEnergy + 10);
-}
-
-void TestShark::testLoseEnergy()
-{
-    // int initialEnergy = shark->getEnergy();
-    shark->loseEnergy(5);
-    QCOMPARE(shark->getEnergy(), initialEnergy - 5);
-}
-
-void TestShark::testCheckEnergy()
-{
-    // shark->loseEnergy(shark->getEnergy()); // Deplete energy
-    shark->checkEnergy();
-    QVERIFY(shark->isTaggedForDeletion());
-}
-*/
 
 QTEST_MAIN(TestShark)
 #include "test_shark.moc"
