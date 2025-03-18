@@ -41,10 +41,14 @@ jobs:
           # We don't need to set up the environment variable for CMake to see Qt because the install-qt-action
           # sets up the necessary variables automatically
       run: cmake --build build --config ${{env.BUILD_TYPE}}
-    - name: Test-worldtests
+    - name: Test-WorldTests
       if: matrix.os == 'ubuntu-latest'
       working-directory: ${{github.workspace}}/build/WorldTests
       run: ctest -V -O test_world.log --timeout 5 -C ${{env.BUILD_TYPE}}
+    - name: Test-SharkTests
+      if: matrix.os == 'ubuntu-latest'
+      working-directory: ${{github.workspace}}/build/SharkTests
+      run: ctest -V -O test_shark.log --timeout 5 -C ${{env.BUILD_TYPE}}
     - name: Archive build artifacts
       # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/storing-and-sharing-data-from-a-workflow
       if: always()
