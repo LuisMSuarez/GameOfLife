@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(worldtests LANGUAGES CXX)
+project(shark LANGUAGES CXX)
 
 enable_testing()
 
@@ -24,9 +24,8 @@ set(SOURCES
     ../creaturefactory.h ../creaturefactory.cpp
 )
 
-add_executable(worldtests
-    ${SOURCES}
-    test_world.cpp
-)
-add_test(NAME worldtests COMMAND worldtests)
-target_link_libraries(worldtests PRIVATE Qt${QT_VERSION_MAJOR}::Test)
+add_executable(sharktests ${SOURCES} test_shark.cpp)
+add_test(NAME sharktests COMMAND sharktests)
+
+target_link_libraries(sharktests PRIVATE Qt${QT_VERSION_MAJOR}::Test)
+

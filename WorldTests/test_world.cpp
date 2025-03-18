@@ -21,11 +21,15 @@ class TestWorld : public QObject
         World *world;
 };
 
+// Run once before any of the tests in the class executes.
+// This ensures that each test run starts with a clean slate and avoids interference between tests.
 void TestWorld::initTestCase()
 {
     world = new World();
 }
 
+// special function within a test class that is executed once after all test functions in that class have completed.
+// It serves the purpose of cleaning up resources or states that were set up in the
 void TestWorld::cleanupTestCase()
 {
     delete world;
