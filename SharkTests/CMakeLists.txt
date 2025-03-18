@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(shark LANGUAGES CXX)
+project(sharktests LANGUAGES CXX)
 
 enable_testing()
 
@@ -14,18 +14,11 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(SOURCES
-    ../fish.h ../fish.cpp
-    ../shark.h ../shark.cpp
-    ../world.h ../world.cpp
-    ../creature.h ../creature.cpp
-    ../cell.h ../cell.cpp
-    ../creatureType.h
-    ../creaturefactory.h ../creaturefactory.cpp
+add_executable(sharktests
+    test_shark.cpp
 )
 
-add_executable(sharktests ${SOURCES} test_shark.cpp)
+# Link the core library and Qt Test framework
+target_link_libraries(sharktests PRIVATE GameOfLifeCore Qt${QT_VERSION_MAJOR}::Test)
+
 add_test(NAME sharktests COMMAND sharktests)
-
-target_link_libraries(sharktests PRIVATE Qt${QT_VERSION_MAJOR}::Test)
-

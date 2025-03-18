@@ -14,19 +14,11 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(SOURCES
-    ../fish.h ../fish.cpp
-    ../shark.h ../shark.cpp
-    ../world.h ../world.cpp
-    ../creature.h ../creature.cpp
-    ../cell.h ../cell.cpp
-    ../creatureType.h
-    ../creaturefactory.h ../creaturefactory.cpp
-)
-
 add_executable(worldtests
-    ${SOURCES}
     test_world.cpp
 )
+
+# Link the core library and Qt Test framework
+target_link_libraries(worldtests PRIVATE GameOfLifeCore Qt${QT_VERSION_MAJOR}::Test)
+
 add_test(NAME worldtests COMMAND worldtests)
-target_link_libraries(worldtests PRIVATE Qt${QT_VERSION_MAJOR}::Test)
