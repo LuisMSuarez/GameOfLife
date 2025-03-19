@@ -4,18 +4,27 @@ My dev box was SuSE Linux tubleweed, however due to Qt's cross-platform design, 
 Main technical specs of this project:
 - C++/Qt
 - Type: Game/simulation
-- Cross-platform
+- Cross-platform (code builds and runs in both Linux and Windows!)
 - Contains suite of automated tests using Qt Tests
+- Modular build, where core components of the simulation are compiled to a static library and reused in the QT app and the QT tests with static linking and no rebuild required
+- Usage of resource files (.qrc)
 - CI build pipeline using github actions using YAML
 
 This simulation takes place in a n x m grid of cells (the “world”), where sharks and fish (“creatures”) coexist by moving, breeding and acting as predators/preys.  The point of the simulation is to watch how the world evolves based on how you tweak the starting parameters, such as size, starting number of sharks and fish, and breeding, lifetime intervals.
 
-Below is a screenshot of the main window:
-![image](https://github.com/user-attachments/assets/c5ee8d17-1947-472b-9d62-66e263c0861c)
+I was very pleased with the portability aspects of the code and the QT platform.
+I originally developed the project in a Linux box, and was able to recompile and run the project in Windows with no changes.
+Note: the screen resolution of my 2 boxes is different, hence some cosmetic differences in text size.
 
+
+Linux             |  Windows
+:-------------------------:|:-------------------------:
+![image](https://github.com/user-attachments/assets/c5ee8d17-1947-472b-9d62-66e263c0861c)  |  ![image](https://github.com/user-attachments/assets/6d501636-a47c-429c-a77e-dacd4c97f785)
+
+Now, back to the simulation itself!
 In the original definition of the game, the world takes a toroid shape, where the top and bottom edges are connected, and also the left and right edges.  
 
-I found that for the end-user that is watching the simulation, these rules are not very intuitive, so I chose to treat the world as a box enclosure where the edges are barriers.  That being said, in my implementation it is easy enough to fall back to the original definition.
+I found that for the end-user that is watching the simulation, these rules are not very intuitive, so I chose to treat the world as a box enclosure where the edges are barriers (like a fish tank).  That being said, in my implementation it is easy enough to fall back to the original definition.
 While the game seems straightforward enough to code, it presents interesting design challenges if the implementation is to adhere to principles of single responsibility, encapsulation, extensibility, code reuse and others, making this an excellent exercise from a programming perspective.  On a C++ implementation, one must also take care of defining and utilizing constructors & destructors for the various classes and deciding where to use static objects, references and pointers to model when creatures move, breed, are eaten or die.
 From the start, it becomes apparent that shark and fish have behaviors in common, but also rules that make them behave differently.  This can be modelled using a base abstract class “Creature” from which “Shark” and “Fish” classes inherit.  Moreover, it is entirely possible to extend the game with other fun creatures such as “Octopus”,  “Squids” or others with additional derived classes.  This adheres with the “Open for extension, closed for modification” SOLID design principle.
 Each creature overrides the virtual “tick” method, that defines the next move the creature will make within the world (move, breed, etc) adhering to the rules of the research paper or your own fun variations of it.
