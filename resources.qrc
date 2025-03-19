@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/sharks">
+        <file alias="shark-default">resources/shark.jpg</file>
+        <file alias="shark1">resources/shark1.jpg</file>
+        <file alias="shark2">resources/shark2.jpg</file>
+        <file alias="shark3">resources/shark3.jpg</file>
+        <file alias="shark4">resources/shark4.jpg</file>
+    </qresource>
+    <qresource prefix="/fish">
+        <file alias="fish-default">resources/fish.jpg</file>
+        <file alias="fish1">resources/fish1.jpg</file>
+        <file alias="fish2">resources/fish2.jpg</file>
+        <file alias="fish3">resources/fish3.jpg</file>
+        <file alias="fish4">resources/fish4.jpg</file>
+    </qresource>
+    <qresource prefix="/water">
+        <file alias="water-default">resources/water.jpg</file>
+    </qresource>
+</RCC>

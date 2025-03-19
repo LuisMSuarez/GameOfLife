@@ -15,11 +15,12 @@ std::string Fish::getResource()
 {
     std::array<std::string, 1> resources
         {
-            "/home/luismi/Documents/repos/GameOfLife/resources/fish.jpg",
-            //"/home/luismi/Documents/repos/GameOfLife/resources/fish1.jpg",
-            // "/home/luismi/Documents/repos/GameOfLife/resources/fish2.jpg",
-            // "/home/luismi/Documents/repos/GameOfLife/resources/fish3.jpg",
-            // "/home/luismi/Documents/repos/GameOfLife/resources/fish4.jpg"
+            ":/fish/fish-default",
+            // uncomment as many lines from below as different variations of the creature is desired
+            //":/fish/fish1",
+            // ":/fish/fish2",
+            // ":/fish/fish3",
+            // ":/fish/fish4"
         };
 
     // Generate a random number between 0 and 3
