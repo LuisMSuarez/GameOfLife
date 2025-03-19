@@ -14,11 +14,12 @@ std::string Shark::getResource()
 {
     std::array<std::string, 1> resources
     {
-        "/home/luismi/Documents/repos/GameOfLife/resources/shark.jpg",
-        //"/home/luismi/Documents/repos/GameOfLife/resources/shark1.jpg",
-        //"/home/luismi/Documents/repos/GameOfLife/resources/shark2.jpg",
-        //"/home/luismi/Documents/repos/GameOfLife/resources/shark3.jpg",
-        //"/home/luismi/Documents/repos/GameOfLife/resources/shark4.jpg",
+        ":/sharks/shark-default",
+        // uncomment as many lines from below as different variations of the creature is desired
+        //":/sharks/shark1",
+        //":/sharks/shark2",
+        //":/sharks/shark3",
+        //":/sharks/shark4",
     };
 
     // Generate a random number between 0 and 3

@@ -44,7 +44,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::renderWorld()
 {
-    QPixmap pixmapWater("/home/luismi/Documents/repos/GameOfLife/resources/water.jpg");
+    QPixmap pixmapWater(":/water/water-default");
 
     int rows = m_world.rowCount();
     int cols = m_world.colCount();
