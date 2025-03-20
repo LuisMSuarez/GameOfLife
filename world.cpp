@@ -129,14 +129,14 @@ std::vector<Cell*> World::getNeighboringCellsShuffled(const Cell &position)
     uint32_t col = position.getCol();
     std::vector<Cell*> neighboringCells;
 
-    checkMapCoordinatesAndAdd(row-1, col-1, this->operator()(row-1, col-1), neighboringCells);
-    checkMapCoordinatesAndAdd(row-1, col, this->operator()(row-1, col), neighboringCells);
-    checkMapCoordinatesAndAdd(row-1, col+1, this->operator()(row-1, col+1), neighboringCells);
-    checkMapCoordinatesAndAdd(row, col+1, this->operator()(row, col+1), neighboringCells);
-    checkMapCoordinatesAndAdd(row+1, col+1, this->operator()(row+1, col+1), neighboringCells);
-    checkMapCoordinatesAndAdd(row+1, col, this->operator()(row+1, col), neighboringCells);
-    checkMapCoordinatesAndAdd(row+1, col-1, this->operator()(row+1, col-1), neighboringCells);
-    checkMapCoordinatesAndAdd(row, col-1, this->operator()(row, col-1), neighboringCells);
+    checkMapCoordinatesAndAdd(row-1, col-1, (*this)(row-1, col-1), neighboringCells);
+    checkMapCoordinatesAndAdd(row-1, col, (*this)(row-1, col), neighboringCells);
+    checkMapCoordinatesAndAdd(row-1, col+1, (*this)(row-1, col+1), neighboringCells);
+    checkMapCoordinatesAndAdd(row, col+1, (*this)(row, col+1), neighboringCells);
+    checkMapCoordinatesAndAdd(row+1, col+1, (*this)(row+1, col+1), neighboringCells);
+    checkMapCoordinatesAndAdd(row+1, col, (*this)(row+1, col), neighboringCells);
+    checkMapCoordinatesAndAdd(row+1, col-1, (*this)(row+1, col-1), neighboringCells);
+    checkMapCoordinatesAndAdd(row, col-1, (*this)(row, col-1), neighboringCells);
 
     // Create a random number generator
     std::random_device rd;

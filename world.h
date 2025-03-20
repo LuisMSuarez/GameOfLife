@@ -47,13 +47,6 @@ class World
         void tick();
 
         /**
-         * @brief Creates a new world with the specified number of rows and columns.
-         * @param rowCount Number of rows.
-         * @param colCount Number of columns.
-         */
-        void newWorld(uint32_t rowCount, uint32_t colCount);
-
-        /**
          * @brief Adds creatures of the specified type to the world.
          * @param type The type of creatures to add (fish or shark).
          * @param count The number of creatures to add.
