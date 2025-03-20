@@ -1,4 +1,4 @@
-#include <QtTest/QtTest>
+#include <QtTest>
 #include "../world.h"
 #include "../cell.h"
 #include "../fish.h"
@@ -19,68 +19,90 @@ class TestWorld : public QObject
 
     private:
         World *world;
+        int countCreatures();
 };
 
 // Run once before any of the tests in the class executes.
-// This ensures that each test run starts with a clean slate and avoids interference between tests.
 void TestWorld::initTestCase()
 {
     world = new World();
 }
 
-// special function within a test class that is executed once after all test functions in that class have completed.
-// It serves the purpose of cleaning up resources or states that were set up in the
+// Run once after all tests in the class have completed.
+// It serves the purpose of cleaning up resources or states that were set up in the initTestCase function.
 void TestWorld::cleanupTestCase()
 {
     delete world;
+    // deletion of cells and associated creatures is orchestrated by the world itself
 }
 
 void TestWorld::testInitialize()
 {
+    // Act
     world->initialize(10, 10);
+
+    // Assert
     QCOMPARE(world->rowCount(), 10);
     QCOMPARE(world->colCount(), 10);
 }
 
 void TestWorld::testTick()
 {
+    // Arrange
     world->initialize(10, 10);
     world->addCreatures(CreatureType::fish, 10, false);
     world->addCreatures(CreatureType::shark, 5, false);
-    int creatureCount = 0;
-    for (auto &cell : *world)
-    {
-        if (cell.getCreature() != nullptr)
-        {
-            creatureCount++;
-        }
-    }
-    QCOMPARE(creatureCount, 15);
+    QCOMPARE(countCreatures(), 15);
+
+    // Act
     world->tick();
-    // Check if tick has been processed (difficult to check exact state due to randomness)
+
+    // Assert
+    // Diffucult to have specific checks to see if the tick has been processed (difficult to check exact state due to randomness of moves)
+    // however this should not crash the test.
+    // at minimum, we should have less or equal than the original number of creatures (some fish may be eaten)
+    QVERIFY(countCreatures() <= 15);
 }
 
 void TestWorld::testGetNeighboringCellsShuffled()
 {
+    // Arrange
     world->initialize(10, 10);
     Cell &cell = (*world)(5, 5);
+
+    // Act
     auto neighbors = world->getNeighboringCellsShuffled(cell);
+
+    // Assert
     QCOMPARE(neighbors.size(), 8);
 }
 
 void TestWorld::testAddCreatures()
 {
+    // Arrange
     world->initialize(10, 10);
-    world->addCreatures(CreatureType::fish, 10, false);
-    int fishCount = 0;
-    for (auto &cell : *world)
+
+    // Act
+    world->addCreatures(CreatureType::fish, 10);
+    world->addCreatures(CreatureType::fish, 2);
+
+    // Assert
+    QCOMPARE(countCreatures(), 12);
+}
+
+// required helper in order to not have to make any private methods in World public
+int TestWorld::countCreatures()
+{
+    int count = 0;
+    for (Cell &cell : *world)
     {
-        if (cell.getCreature() && dynamic_cast<Fish*>(cell.getCreature()))
+        if (cell.getCreature() != nullptr)
         {
-            fishCount++;
+            count++;
         }
     }
-    QCOMPARE(fishCount, 10);
+
+    return count;
 }
 
 QTEST_MAIN(TestWorld)
