@@ -11,6 +11,7 @@ private slots:
     void cleanupTestCase();
     void testMove();
     void testReproduce();
+    void testMaxAge();
     void testGetResource();
 private:
     World* world;
@@ -88,6 +89,32 @@ void TestFish::testReproduce()
 
     // there should be 2 fish at this point
     QCOMPARE(Utils::countCreatures(*world), 2);
+}
+
+// We place a single fish in the 2x2 world
+// once the mag age is reached, we should now have 0 fish
+void TestFish::testMaxAge()
+{
+    // Arrange
+    world->initialize(2, 2);
+    cell = &(*world)(0,0);
+
+    // custom create a new fish overriding default parameters such that it will reach max age before it reproduces
+    int maxAge = 5;
+    fish = new Fish(*world, *cell, /* reproductionTicks */ 999, /* maxAge */ maxAge, /* resourcePath */ "res");
+
+    for (int tick=1; tick<maxAge; tick++)
+    {
+        world->tick();
+        // there should be 1 fish at this point
+        QCOMPARE(Utils::countCreatures(*world), 1);
+    }
+
+    // one more tick and the fish should die
+    world->tick();
+
+    // there should be 0 fish at this point
+    QCOMPARE(Utils::countCreatures(*world), 0);
 }
 
 QTEST_MAIN(TestFish)

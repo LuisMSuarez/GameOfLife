@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(TestFish LANGUAGES CXX)
+project(fishtests LANGUAGES CXX)
 
 enable_testing()
 
@@ -14,8 +14,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(TestFish test_fish.cpp)
-add_test(NAME TestFish COMMAND TestFish)
+add_executable(fishtests test_fish.cpp)
 
-target_link_libraries(TestFish PRIVATE GameOfLifeCore Qt${QT_VERSION_MAJOR}::Test)
+target_link_libraries(fishtests PRIVATE GameOfLifeCore Qt${QT_VERSION_MAJOR}::Test)
 
+add_test(NAME fishtests COMMAND fishtests)
