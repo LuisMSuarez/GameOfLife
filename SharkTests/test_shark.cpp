@@ -40,7 +40,7 @@ void TestShark::cleanupTestCase()
 void TestShark::testGetResource()
 {
     // Act
-    QString resource = QString::fromStdString(shark->getResource());
+    QString resource = QString::fromStdString(Shark::getResource());
 
     // Assert
     QVERIFY(resource.contains("shark-default"));
