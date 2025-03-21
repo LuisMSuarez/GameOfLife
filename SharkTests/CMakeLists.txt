@@ -14,9 +14,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(sharktests
-    test_shark.cpp
-)
+add_executable(sharktests test_shark.cpp)
 
 # Link the core library and Qt Test framework
 target_link_libraries(sharktests PRIVATE GameOfLifeCore Qt${QT_VERSION_MAJOR}::Test)

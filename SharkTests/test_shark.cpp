@@ -4,6 +4,7 @@
 #include "../cell.h"
 #include "../creaturefactory.h"
 #include "../creatureType.h"
+#include "../utils.h"
 
 class TestShark : public QObject
 {
@@ -17,7 +18,6 @@ private slots:
     void testMove();
     void cleanupTestCase();
 private:
-    int countCreatures();
     World* world;
     Cell* cell;
     Shark* shark;
@@ -63,20 +63,20 @@ void TestShark::testEnergyDepletion()
     QVERIFY(Shark::s_initialEnergy < Shark::s_reproductionTicks);
 
     // Act
-    int initialCount = countCreatures();
+    int initialCount = Utils::countCreatures(*world);
     for (int i=1; i<= Shark::s_initialEnergy-1; i++)
     {
         world->tick();
 
         // for each tick before the shark runs out of energy, the creature should still exist
-        QCOMPARE(countCreatures(), initialCount);
+        QCOMPARE(Utils::countCreatures(*world), initialCount);
     }
 
     // one last tick and the shark should die, increasing the number of free cells by 1
     world->tick();
 
     // Assert
-    QCOMPARE(countCreatures(), initialCount-1);
+    QCOMPARE(Utils::countCreatures(*world), initialCount-1);
 }
 
 void TestShark::testEatFish()
@@ -102,14 +102,14 @@ void TestShark::testEatFish()
     QVERIFY(Shark::s_reproductionTicks > 1);
 
     // there should be 2 creatures (a fish and a shark) at this point
-    QCOMPARE(countCreatures(), 2);
+    QCOMPARE(Utils::countCreatures(*world), 2);
 
     // Act
     world->tick();
 
     // the shark should have eaten the fish as they were placed adjacent in a 2x2
     // Assert
-    QCOMPARE(countCreatures(), 1);
+    QCOMPARE(Utils::countCreatures(*world), 1);
 }
 
 void TestShark::testMove()
@@ -131,30 +131,15 @@ void TestShark::testMove()
     QVERIFY(Shark::s_reproductionTicks > 1);
 
     // there should be 1 creature at this point
-    QCOMPARE(countCreatures(), 1);
+    QCOMPARE(Utils::countCreatures(*world), 1);
 
     // Act
     world->tick();
 
     // the shark should still be alive, and no longer in the original cell where it was created
     // Assert
-    QCOMPARE(countCreatures(), 1);
+    QCOMPARE(Utils::countCreatures(*world), 1);
     QVERIFY(cell->getCreature() == nullptr);
-}
-
-// required helper in order to not have to make any private methods in World public
-int TestShark::countCreatures()
-{
-    int count = 0;
-    for (Cell &cell : *world)
-    {
-        if (cell.getCreature() != nullptr)
-        {
-            count++;
-        }
-    }
-
-    return count;
 }
 
 QTEST_MAIN(TestShark)

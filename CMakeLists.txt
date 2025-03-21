@@ -21,6 +21,7 @@ set(CORE_SOURCES
     cell.h cell.cpp
     creatureType.h
     creaturefactory.h creaturefactory.cpp
+    utils.h utils.cpp
 )
 
 # Create a static library for the core logic
@@ -82,3 +83,4 @@ endif()
 # Add subdirectories for tests
 add_subdirectory(WorldTests)
 add_subdirectory(SharkTests)
+add_subdirectory(FishTests)
