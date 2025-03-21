@@ -20,11 +20,9 @@ Creature& CreatureFactory::Create(CreatureType type, World &world, Cell &cell, b
             newCreature = new Fish(world, cell, Fish::s_reproductionTicks, Fish::s_maxAge, Fish::getResource(), randomAge ? rand() % Fish::s_maxAge : 0);
         break;
         case CreatureType::shark:
-             newCreature = new Shark(world, cell, Shark::s_reproductionTicks, Shark::s_maxAge, Shark::getResource(), randomAge ? rand() % Shark::s_maxAge : 0);
+             newCreature = new Shark(world, cell, Shark::s_reproductionTicks, Shark::s_maxAge, Shark::s_initialEnergy, Shark::getResource(), randomAge ? rand() % Shark::s_maxAge : 0);
         break;
     }
-
-    cell.addCreature(newCreature);
 
     return *newCreature;
 }

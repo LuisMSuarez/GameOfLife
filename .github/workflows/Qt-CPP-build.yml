@@ -49,6 +49,10 @@ jobs:
       if: matrix.os == 'ubuntu-latest'
       working-directory: ${{github.workspace}}/build/SharkTests
       run: ctest -V -O test_shark.log --timeout 5 -C ${{env.BUILD_TYPE}}
+    - name: Test-FishTests
+      if: matrix.os == 'ubuntu-latest'
+      working-directory: ${{github.workspace}}/build/FishTests
+      run: ctest -V -O test_fish.log --timeout 5 -C ${{env.BUILD_TYPE}}
     - name: Archive build artifacts
       # https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/storing-and-sharing-data-from-a-workflow
       if: always()

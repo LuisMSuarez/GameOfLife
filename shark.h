@@ -18,10 +18,11 @@ class Shark : public Creature
          * @param cell Reference to the cell where the shark is located.
          * @param reproductionTicks Number of ticks required for reproduction.
          * @param maxAge Maximum age of the shark.
+         * @param initialEnergy Initial energy of the shark.
          * @param resourcePath Path to the resource file associated with the shark.
          * @param startingAge Optional parameter to set the starting age of the shark. Default is 0.
          */
-        Shark(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, std::string resourcePath, uint32_t startingAge = 0);
+        Shark(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, uint32_t initialEnergy, std::string resourcePath, uint32_t startingAge = 0);
 
         /**
          * @brief Destructor for the Shark class.

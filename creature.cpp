@@ -6,6 +6,7 @@ Creature::Creature(World &world, Cell &cell, uint32_t reproductionTicks, uint32_
 {
     m_reproductionTimer = reproductionTicks;
     m_taggedForDeletion = false;
+    cell.addCreature(this);
 }
 
 Creature::~Creature()

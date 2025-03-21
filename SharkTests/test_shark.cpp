@@ -4,6 +4,7 @@
 #include "../cell.h"
 #include "../creaturefactory.h"
 #include "../creatureType.h"
+#include "../utils.h"
 
 class TestShark : public QObject
 {
@@ -15,9 +16,10 @@ private slots:
     void testEnergyDepletion();
     void testEatFish();
     void testMove();
+    void testReproduce();
+    void testMaxAge();
     void cleanupTestCase();
 private:
-    int countCreatures();
     World* world;
     Cell* cell;
     Shark* shark;
@@ -40,21 +42,20 @@ void TestShark::cleanupTestCase()
 void TestShark::testGetResource()
 {
     // Act
-    QString resource = QString::fromStdString(shark->getResource());
+    QString resource = QString::fromStdString(Shark::getResource());
 
     // Assert
-    QVERIFY(resource.contains("shark-default"));
+    QVERIFY(resource.contains("shark"));
 }
 
+// We have a single shark in a world that contains no fish
+// if we tick the world Shark::s_initialEnergy times, the shark should run
+// out of energy and be destroyed
 void TestShark::testEnergyDepletion()
 {
-    // We have a single shark in a world that contains no fish
-    // if we tick the world Shark::s_initialEnergy times, the shark should run
-    // out of energy and be destroyed
     // Arrange
     world->initialize(2, 2);
-    cell = &(*world)(0,0);
-    shark = static_cast<Shark*>(&CreatureFactory::Create(CreatureType::shark, *world, *cell));
+    world->addCreatures(CreatureType::shark, 1);
 
     // ensure that the energy depletion event happens before the max age event where the shark inevitably dies
     QVERIFY(Shark::s_initialEnergy < Shark::s_maxAge);
@@ -63,34 +64,30 @@ void TestShark::testEnergyDepletion()
     QVERIFY(Shark::s_initialEnergy < Shark::s_reproductionTicks);
 
     // Act
-    int initialCount = countCreatures();
+    int initialCount = Utils::countCreatures(*world);
     for (int i=1; i<= Shark::s_initialEnergy-1; i++)
     {
         world->tick();
 
         // for each tick before the shark runs out of energy, the creature should still exist
-        QCOMPARE(countCreatures(), initialCount);
+        QCOMPARE(Utils::countCreatures(*world), initialCount);
     }
 
     // one last tick and the shark should die, increasing the number of free cells by 1
     world->tick();
 
     // Assert
-    QCOMPARE(countCreatures(), initialCount-1);
+    QCOMPARE(Utils::countCreatures(*world), initialCount-1);
 }
 
+// We place a single shark and a single fish in the 2x2 world
+// when a tick takes place, the shark should eat the fish
 void TestShark::testEatFish()
 {
-    // We place a single shark and a single fish in the 2x2 world
-    // when a tick takes place, the shark should eat the fish
-
     // Arrange
     world->initialize(2, 2);
-    cell = &(*world)(0,0);
-    shark = static_cast<Shark*>(&CreatureFactory::Create(CreatureType::shark, *world, *cell));
-
-    auto fishCell = &(*world)(0,1);
-    CreatureFactory::Create(CreatureType::fish, *world, *fishCell);
+    world->addCreatures(CreatureType::shark, 1);
+    world->addCreatures(CreatureType::fish, 1);
 
     // ensure that the energy depletion event will not happen upon a single tick
     QVERIFY(Shark::s_initialEnergy > 1);
@@ -102,20 +99,20 @@ void TestShark::testEatFish()
     QVERIFY(Shark::s_reproductionTicks > 1);
 
     // there should be 2 creatures (a fish and a shark) at this point
-    QCOMPARE(countCreatures(), 2);
+    QCOMPARE(Utils::countCreatures(*world), 2);
 
     // Act
     world->tick();
 
     // the shark should have eaten the fish as they were placed adjacent in a 2x2
     // Assert
-    QCOMPARE(countCreatures(), 1);
+    QCOMPARE(Utils::countCreatures(*world), 1);
 }
 
+// We place a single shark in the 2x2 world with no fish
+// when a tick takes place, the shark should move to an adjacent cell
 void TestShark::testMove()
 {
-    // We place a single shark in the 2x2 world with no fish
-    // when a tick takes place, the shark should move to an adjacent cell
     // Arrange
     world->initialize(2, 2);
     cell = &(*world)(0,0);
@@ -131,30 +128,68 @@ void TestShark::testMove()
     QVERIFY(Shark::s_reproductionTicks > 1);
 
     // there should be 1 creature at this point
-    QCOMPARE(countCreatures(), 1);
+    QCOMPARE(Utils::countCreatures(*world), 1);
 
     // Act
     world->tick();
 
     // the shark should still be alive, and no longer in the original cell where it was created
     // Assert
-    QCOMPARE(countCreatures(), 1);
+    QCOMPARE(Utils::countCreatures(*world), 1);
     QVERIFY(cell->getCreature() == nullptr);
 }
 
-// required helper in order to not have to make any private methods in World public
-int TestShark::countCreatures()
+// We place a single shark in the 2x2 world
+// once the reproduction age is reached, we should now have 2 sharks
+void TestShark::testReproduce()
 {
-    int count = 0;
-    for (Cell &cell : *world)
+    // Arrange
+    world->initialize(2, 2);
+
+    // custom create a new shark overriding default parameters such that it will reproduce before it runs out of energy or dies
+    // and also not run out of energy
+    int reproductionTicks = 5;
+    shark = new Shark(*world, *cell, /* reproductionTicks */ 5, /* maxAge */ 999, /* initialEnergy */ 999, /* resourcePath */ "res");
+
+    for (int tick=1; tick<reproductionTicks; tick++)
     {
-        if (cell.getCreature() != nullptr)
-        {
-            count++;
-        }
+        world->tick();
+        // there should be 1 shark at this point
+        QCOMPARE(Utils::countCreatures(*world), 1);
     }
 
-    return count;
+    // one more tick and the fish should reproduce
+    world->tick();
+
+    // there should be 2 sharks at this point
+    QCOMPARE(Utils::countCreatures(*world), 2);
+}
+
+// We place a single shark in the 2x2 world
+// once the mag age is reached, we should now have 0 sharks
+void TestShark::testMaxAge()
+{
+    // Arrange
+    world->initialize(2, 2);
+    cell = &(*world)(0,0);
+
+    // custom create a new shark overriding default parameters such that it will reach max age before it reproduces
+    // and also not run out of energy
+    int maxAge = 5;
+    shark = new Shark(*world, *cell, /* reproductionTicks */ 999, /* maxAge */ maxAge, /* initialEnergy */ 999, /* resourcePath */ "res");
+
+    for (int tick=1; tick<maxAge; tick++)
+    {
+        world->tick();
+        // there should be 1 shark at this point
+        QCOMPARE(Utils::countCreatures(*world), 1);
+    }
+
+    // one more tick and the shark should die
+    world->tick();
+
+    // there should be 0 sharks at this point
+    QCOMPARE(Utils::countCreatures(*world), 0);
 }
 
 QTEST_MAIN(TestShark)

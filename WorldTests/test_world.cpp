@@ -4,6 +4,7 @@
 #include "../fish.h"
 #include "../shark.h"
 #include "../creatureType.h"
+#include "../utils.h"
 
 class TestWorld : public QObject
 {
@@ -19,7 +20,6 @@ class TestWorld : public QObject
 
     private:
         World *world;
-        int countCreatures();
 };
 
 // Run once before any of the tests in the class executes.
@@ -52,7 +52,7 @@ void TestWorld::testTick()
     world->initialize(10, 10);
     world->addCreatures(CreatureType::fish, 10, false);
     world->addCreatures(CreatureType::shark, 5, false);
-    QCOMPARE(countCreatures(), 15);
+    QCOMPARE(Utils::countCreatures(*world), 15);
 
     // Act
     world->tick();
@@ -61,7 +61,7 @@ void TestWorld::testTick()
     // Diffucult to have specific checks to see if the tick has been processed (difficult to check exact state due to randomness of moves)
     // however this should not crash the test.
     // at minimum, we should have less or equal than the original number of creatures (some fish may be eaten)
-    QVERIFY(countCreatures() <= 15);
+    QVERIFY(Utils::countCreatures(*world) <= 15);
 }
 
 void TestWorld::testGetNeighboringCellsShuffled()
@@ -87,22 +87,7 @@ void TestWorld::testAddCreatures()
     world->addCreatures(CreatureType::fish, 2);
 
     // Assert
-    QCOMPARE(countCreatures(), 12);
-}
-
-// required helper in order to not have to make any private methods in World public
-int TestWorld::countCreatures()
-{
-    int count = 0;
-    for (Cell &cell : *world)
-    {
-        if (cell.getCreature() != nullptr)
-        {
-            count++;
-        }
-    }
-
-    return count;
+    QCOMPARE(Utils::countCreatures(*world), 12);
 }
 
 QTEST_MAIN(TestWorld)
