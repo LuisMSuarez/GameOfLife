@@ -43,18 +43,17 @@ void TestShark::testGetResource()
     QString resource = QString::fromStdString(Shark::getResource());
 
     // Assert
-    QVERIFY(resource.contains("shark-default"));
+    QVERIFY(resource.contains("shark"));
 }
 
+// We have a single shark in a world that contains no fish
+// if we tick the world Shark::s_initialEnergy times, the shark should run
+// out of energy and be destroyed
 void TestShark::testEnergyDepletion()
 {
-    // We have a single shark in a world that contains no fish
-    // if we tick the world Shark::s_initialEnergy times, the shark should run
-    // out of energy and be destroyed
     // Arrange
     world->initialize(2, 2);
-    cell = &(*world)(0,0);
-    shark = static_cast<Shark*>(&CreatureFactory::Create(CreatureType::shark, *world, *cell));
+    world->addCreatures(CreatureType::shark, 1);
 
     // ensure that the energy depletion event happens before the max age event where the shark inevitably dies
     QVERIFY(Shark::s_initialEnergy < Shark::s_maxAge);
@@ -79,18 +78,14 @@ void TestShark::testEnergyDepletion()
     QCOMPARE(Utils::countCreatures(*world), initialCount-1);
 }
 
+// We place a single shark and a single fish in the 2x2 world
+// when a tick takes place, the shark should eat the fish
 void TestShark::testEatFish()
 {
-    // We place a single shark and a single fish in the 2x2 world
-    // when a tick takes place, the shark should eat the fish
-
     // Arrange
     world->initialize(2, 2);
-    cell = &(*world)(0,0);
-    shark = static_cast<Shark*>(&CreatureFactory::Create(CreatureType::shark, *world, *cell));
-
-    auto fishCell = &(*world)(0,1);
-    CreatureFactory::Create(CreatureType::fish, *world, *fishCell);
+    world->addCreatures(CreatureType::shark, 1);
+    world->addCreatures(CreatureType::fish, 1);
 
     // ensure that the energy depletion event will not happen upon a single tick
     QVERIFY(Shark::s_initialEnergy > 1);
@@ -112,10 +107,10 @@ void TestShark::testEatFish()
     QCOMPARE(Utils::countCreatures(*world), 1);
 }
 
+// We place a single shark in the 2x2 world with no fish
+// when a tick takes place, the shark should move to an adjacent cell
 void TestShark::testMove()
 {
-    // We place a single shark in the 2x2 world with no fish
-    // when a tick takes place, the shark should move to an adjacent cell
     // Arrange
     world->initialize(2, 2);
     cell = &(*world)(0,0);
