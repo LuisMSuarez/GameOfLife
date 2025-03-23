@@ -1,55 +1,56 @@
 #include "cell.h"
 
+using namespace gameOfLifeCore;
 
-Cell::Cell()
+gameOfLifeCore::Cell::Cell()
 {
     m_creature = nullptr;
 }
 
-Cell::~Cell()
+gameOfLifeCore::Cell::~Cell()
 {
     destroyCreature();
 }
 
 // We need a separate method to this, outside of the constructor
 // given that we use the vector::resize method that requires a default constructor
-void Cell::setCoordinates(uint32_t row, uint32_t col)
+void gameOfLifeCore::Cell::setCoordinates(uint32_t row, uint32_t col)
 {
     m_row = row;
     m_col = col;
 }
 
-uint32_t Cell::getRow() const
+uint32_t gameOfLifeCore::Cell::getRow() const
 {
     return m_row;
 }
 
-uint32_t Cell::getCol() const
+uint32_t gameOfLifeCore::Cell::getCol() const
 {
     return m_col;
 }
 
-void Cell::addCreature(Creature *creature)
+void gameOfLifeCore::Cell::addCreature(Creature *creature)
 {
     m_creature = creature;
 }
 
-Creature* Cell::getCreature()
+Creature* gameOfLifeCore::Cell::getCreature()
 {
     return m_creature;
 }
 
-bool Cell::isEmpty()
+bool gameOfLifeCore::Cell::isEmpty()
 {
     return m_creature == nullptr;
 }
 
-void Cell::removeCreature()
+void gameOfLifeCore::Cell::removeCreature()
 {
     m_creature = nullptr;
 }
 
-void Cell::destroyCreature()
+void gameOfLifeCore::Cell::destroyCreature()
 {
     if (m_creature != nullptr)
     {

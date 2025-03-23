@@ -1,7 +1,7 @@
 #include "utils.h"
 #include "cell.h"
 
-int Utils::countCreatures(World &world)
+int gameOfLifeCore::Utils::countCreatures(World &world)
 {
     int count = 0;
     for (Cell &cell : world)

@@ -1,6 +1,8 @@
 #pragma once
 #include "creature.h"
 
+namespace gameOfLifeCore
+{
 class Creature; //Forward declaration
 
 class Cell
@@ -21,3 +23,4 @@ class Cell
         uint32_t m_row;
         uint32_t m_col;
 };
+}

@@ -2,6 +2,8 @@
 #include "../fish.h"
 #include "../utils.h"
 
+using namespace gameOfLifeCore;
+
 class TestFish : public QObject
 {
     Q_OBJECT

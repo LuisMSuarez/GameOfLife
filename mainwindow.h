@@ -10,6 +10,8 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+using namespace gameOfLifeCore;
+
 /**
  * @brief The MainWindow class
  *

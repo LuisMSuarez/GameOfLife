@@ -3,6 +3,8 @@
 #include "creature.h"
 #include <array>
 
+namespace gameOfLifeCore
+{
 /**
  * @class Fish
  * @brief Represents a fish in the simulation.
@@ -49,3 +51,4 @@ class Fish : public Creature
          */
         static std::string getResource();
 };
+}

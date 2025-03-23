@@ -6,6 +6,8 @@
 #include "../creatureType.h"
 #include "../utils.h"
 
+using namespace gameOfLifeCore;
+
 class TestShark : public QObject
 {
     Q_OBJECT
