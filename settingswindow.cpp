@@ -3,7 +3,7 @@
 #include "fish.h"
 #include "shark.h"
 
-using namespace gameOfLifeCore;
+using namespace GameOfLifeCore;
 
 SettingsWindow::SettingsWindow(QWidget *parent) :
     QDialog(parent),

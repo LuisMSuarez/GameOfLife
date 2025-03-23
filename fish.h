@@ -3,7 +3,7 @@
 #include "creature.h"
 #include <array>
 
-namespace gameOfLifeCore
+namespace GameOfLifeCore
 {
 /**
  * @class Fish

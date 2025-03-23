@@ -2,7 +2,7 @@
 
 #include "creature.h"
 
-namespace gameOfLifeCore
+namespace GameOfLifeCore
 {
 /**
  * @class Shark

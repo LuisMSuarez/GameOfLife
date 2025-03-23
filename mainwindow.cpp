@@ -10,7 +10,7 @@
 #include "shark.h"
 #include "creatureType.h"
 
-using namespace gameOfLifeCore;
+using namespace GameOfLifeCore;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)

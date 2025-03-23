@@ -1,9 +1,9 @@
 #include <cassert>    // assert
 #include "creature.h"
 
-using namespace gameOfLifeCore;
+using namespace GameOfLifeCore;
 
-gameOfLifeCore::Creature::Creature(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, std::string resourcePath, uint32_t startingAge) :
+GameOfLifeCore::Creature::Creature(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, std::string resourcePath, uint32_t startingAge) :
     m_world(world), m_cell(&cell), m_reproductionTicks(reproductionTicks), m_max_age(maxAge), m_resourcePath(resourcePath), m_age(startingAge)
 {
     m_reproductionTimer = reproductionTicks;
@@ -11,11 +11,11 @@ gameOfLifeCore::Creature::Creature(World &world, Cell &cell, uint32_t reproducti
     cell.addCreature(this);
 }
 
-gameOfLifeCore::Creature::~Creature()
+GameOfLifeCore::Creature::~Creature()
 {
 }
 
-void gameOfLifeCore::Creature::moveTo(Cell &cell)
+void GameOfLifeCore::Creature::moveTo(Cell &cell)
 {
     assert(cell.getCreature() == nullptr); // the destination cell must not already be occupied by another creature
     m_cell->removeCreature();
@@ -23,29 +23,29 @@ void gameOfLifeCore::Creature::moveTo(Cell &cell)
     m_cell = &cell;
 }
 
-Cell& gameOfLifeCore::Creature::getCell()
+Cell& GameOfLifeCore::Creature::getCell()
 {
     return *m_cell;
 }
 
-void gameOfLifeCore::Creature::tagForDeletion()
+void GameOfLifeCore::Creature::tagForDeletion()
 {
     m_cell->removeCreature();
     m_taggedForDeletion = true;
     m_cell = nullptr;
 }
 
-bool gameOfLifeCore::Creature::isTaggedForDeletion()
+bool GameOfLifeCore::Creature::isTaggedForDeletion()
 {
     return m_taggedForDeletion;
 }
 
-std::string gameOfLifeCore::Creature::getResourcePath()
+std::string GameOfLifeCore::Creature::getResourcePath()
 {
     return m_resourcePath;
 }
 
-void gameOfLifeCore::Creature::tick()
+void GameOfLifeCore::Creature::tick()
 {
     m_age++;
     if (m_reproductionTimer > 0)
@@ -54,17 +54,17 @@ void gameOfLifeCore::Creature::tick()
     }
 }
 
-bool gameOfLifeCore::Creature::reachedMaxAge()
+bool GameOfLifeCore::Creature::reachedMaxAge()
 {
     return m_age >= m_max_age;
 }
 
-bool gameOfLifeCore::Creature::reachedTimeToReproduce()
+bool GameOfLifeCore::Creature::reachedTimeToReproduce()
 {
     return m_reproductionTimer <= 0;
 }
 
-void gameOfLifeCore::Creature::resetTimeToReproduce()
+void GameOfLifeCore::Creature::resetTimeToReproduce()
 {
     m_reproductionTimer = m_reproductionTicks;
 }

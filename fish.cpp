@@ -1,19 +1,19 @@
 #include "fish.h"
 
-using namespace gameOfLifeCore;
+using namespace GameOfLifeCore;
 
-gameOfLifeCore::Fish::Fish(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, std::string resourcePath, uint32_t startingAge)
+GameOfLifeCore::Fish::Fish(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, std::string resourcePath, uint32_t startingAge)
     : Creature(world, cell, reproductionTicks, maxAge, resourcePath, startingAge)
 {
 
 }
 
-gameOfLifeCore::Fish::~Fish()
+GameOfLifeCore::Fish::~Fish()
 {
 
 }
 
-std::string gameOfLifeCore::Fish::getResource()
+std::string GameOfLifeCore::Fish::getResource()
 {
     std::array<std::string, 1> resources
         {
@@ -33,7 +33,7 @@ std::string gameOfLifeCore::Fish::getResource()
 uint32_t Fish::s_reproductionTicks = 10;
 uint32_t Fish::s_maxAge = 35;
 
-void gameOfLifeCore::Fish::tick()
+void GameOfLifeCore::Fish::tick()
 {
     Creature::tick();
 

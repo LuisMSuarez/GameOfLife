@@ -7,7 +7,7 @@
 #include "creatureType.h"
 #include "creaturefactory.h"
 
-namespace gameOfLifeCore
+namespace GameOfLifeCore
 {
 
 class Cell;

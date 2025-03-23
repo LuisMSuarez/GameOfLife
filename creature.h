@@ -5,7 +5,7 @@
 #include <string>
 #include <array>
 
-namespace gameOfLifeCore
+namespace GameOfLifeCore
 {
 class World; // Forward declaration
 class Cell;

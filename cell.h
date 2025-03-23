@@ -1,7 +1,7 @@
 #pragma once
 #include "creature.h"
 
-namespace gameOfLifeCore
+namespace GameOfLifeCore
 {
 class Creature; //Forward declaration
 

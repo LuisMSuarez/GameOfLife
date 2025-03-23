@@ -6,7 +6,7 @@
 #include "../creatureType.h"
 #include "../utils.h"
 
-using namespace gameOfLifeCore;
+using namespace GameOfLifeCore;
 
 class TestWorld : public QObject
 {

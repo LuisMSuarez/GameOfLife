@@ -2,7 +2,7 @@
 
 #include "world.h"
 
-namespace gameOfLifeCore
+namespace GameOfLifeCore
 {
 class Utils
 {

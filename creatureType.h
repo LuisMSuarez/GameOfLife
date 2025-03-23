@@ -1,6 +1,6 @@
 #pragma once
 
-namespace gameOfLifeCore
+namespace GameOfLifeCore
 {
 /**
  * @enum CreatureType

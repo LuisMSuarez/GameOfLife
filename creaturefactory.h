@@ -5,7 +5,7 @@
 #include "world.h"
 #include "cell.h"
 
-namespace gameOfLifeCore
+namespace GameOfLifeCore
 {
 class World;
 class Creature;
