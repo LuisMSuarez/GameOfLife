@@ -7,6 +7,9 @@
 #include "creatureType.h"
 #include "creaturefactory.h"
 
+namespace GameOfLifeCore
+{
+
 class Cell;
 
 /**
@@ -127,3 +130,4 @@ class World
          */
         void checkMapCoordinatesAndAdd(uint32_t row, uint32_t col, Cell &cell, std::vector<Cell*> &list);
 };
+}

@@ -5,6 +5,8 @@
 #include "world.h"
 #include "cell.h"
 
+namespace GameOfLifeCore
+{
 class World;
 class Creature;
 class Cell;
@@ -31,3 +33,4 @@ class CreatureFactory
          */
         static Creature& Create(CreatureType type, World &world, Cell &cell, bool randomAge = false);
 };
+}

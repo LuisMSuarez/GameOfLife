@@ -4,16 +4,16 @@
 #include "creatureType.h"
 #include <cstdlib> // rand()
 
+using namespace GameOfLifeCore;
 
-CreatureFactory::CreatureFactory()
+GameOfLifeCore::CreatureFactory::CreatureFactory()
 {
 
 }
 
-Creature& CreatureFactory::Create(CreatureType type, World &world, Cell &cell, bool randomAge)
+Creature& GameOfLifeCore::CreatureFactory::Create(CreatureType type, World &world, Cell &cell, bool randomAge)
 {
     Creature *newCreature = nullptr;
-    int startingAge = 0;
     switch(type)
     {
         case CreatureType::fish:

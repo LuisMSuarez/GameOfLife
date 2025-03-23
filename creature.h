@@ -5,6 +5,8 @@
 #include <string>
 #include <array>
 
+namespace GameOfLifeCore
+{
 class World; // Forward declaration
 class Cell;
 
@@ -100,3 +102,4 @@ class Creature
         bool m_taggedForDeletion;       ///< Flag indicating if the creature is tagged for deletion.
         std::string m_resourcePath;     ///< Path to the resource file.
 };
+}

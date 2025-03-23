@@ -2,6 +2,8 @@
 
 #include "creature.h"
 
+namespace GameOfLifeCore
+{
 /**
  * @class Shark
  * @brief Represents a shark in the simulation.
@@ -75,3 +77,4 @@ class Shark : public Creature
          */
         void checkEnergy();
 };
+}
