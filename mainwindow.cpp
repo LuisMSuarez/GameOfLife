@@ -56,7 +56,8 @@ void MainWindow::renderWorld()
         for (int col = 0; col<cols; col++)
         {
             QPixmap pixmap;
-            if (auto creature = m_world(row,col).getCreature(); creature != nullptr)
+            if (auto creature = m_world(row,col).getCreature();
+                creature != nullptr)
             {
                 auto resource = QString::fromStdString(creature->getResourcePath());
                 pixmap = QPixmap(resource);
@@ -64,9 +65,9 @@ void MainWindow::renderWorld()
             else
             {
                 pixmap = pixmapWater;
-            }
-            auto *widget = dynamic_cast<QLabel*>(ui->gridLayout->itemAtPosition(row, col)->widget());
-            if (widget != nullptr)
+            }            
+            if (auto *widget = dynamic_cast<QLabel*>(ui->gridLayout->itemAtPosition(row, col)->widget());
+                widget != nullptr)
             {
                 widget->setPixmap(pixmap.scaled(cellWidth, cellHeight));
             }

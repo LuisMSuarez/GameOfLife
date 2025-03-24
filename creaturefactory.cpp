@@ -3,6 +3,7 @@
 #include "shark.h"
 #include "creatureType.h"
 #include <cstdlib> // rand()
+#include <stdexcept> // std::runtime_error
 
 using namespace GameOfLifeCore;
 
@@ -22,6 +23,8 @@ Creature& GameOfLifeCore::CreatureFactory::Create(CreatureType type, World &worl
         case CreatureType::shark:
              newCreature = new Shark(world, cell, Shark::s_reproductionTicks, Shark::s_maxAge, Shark::s_initialEnergy, Shark::getResource(), randomAge ? rand() % Shark::s_maxAge : 0);
         break;
+        default:
+            throw std::runtime_error("Invalid creature type for create operation.");
     }
 
     return *newCreature;
