@@ -1,3 +1,4 @@
+#include <stdexcept> // std::runtime_error
 #include "cell.h"
 
 using namespace GameOfLifeCore;
@@ -30,8 +31,13 @@ uint32_t GameOfLifeCore::Cell::getCol() const noexcept
     return m_col;
 }
 
-void GameOfLifeCore::Cell::addCreature(Creature *creature) noexcept
+void GameOfLifeCore::Cell::addCreature(Creature *creature)
 {
+    if (creature == nullptr)
+    {
+        throw std::runtime_error("Creature must not be null");
+    }
+
     m_creature = creature;
 }
 

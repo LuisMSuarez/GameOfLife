@@ -16,6 +16,7 @@ private slots:
     void initTestCase();
     void testGetResource();
     void testEnergyDepletion();
+    void testGainEnergy();
     void testEatFish();
     void testMove();
     void testReproduce();
@@ -75,11 +76,46 @@ void TestShark::testEnergyDepletion()
         QCOMPARE(Utils::countCreatures(*world), initialCount);
     }
 
-    // one last tick and the shark should die, increasing the number of free cells by 1
+    // one last tick and the shark should die
     world->tick();
 
     // Assert
     QCOMPARE(Utils::countCreatures(*world), initialCount-1);
+}
+
+// We place a single shark in the 2x2 world.
+// just before the shark would run out of energy, we add a fish to the world
+// and we verify that the shark can survive addidional ticks
+void TestShark::testGainEnergy()
+{
+    // Arrange
+    world->initialize(2, 2);
+    world->addCreatures(CreatureType::shark, 1);
+
+    // ensure that the energy depletion event happens before the max age event where the shark inevitably dies
+    QVERIFY(Shark::s_initialEnergy < Shark::s_maxAge);
+
+    // ensure that the energy depletion event happens before the reproduction age event where the shark will spawn a new child
+    QVERIFY(Shark::s_initialEnergy < Shark::s_reproductionTicks);
+
+    // Act
+    int initialCount = Utils::countCreatures(*world);
+    for (int i=1; i<= Shark::s_initialEnergy-1; i++)
+    {
+        world->tick();
+
+        // for each tick before the shark runs out of energy, the creature should still exist
+        QCOMPARE(Utils::countCreatures(*world), initialCount);
+    }
+
+    // add a fish to the world so the shark can eat it and gain energy
+    world->addCreatures(CreatureType::fish, 1);
+
+    // one more tick and the shark should not die and the fish should have been eaten
+    world->tick();
+
+    // Assert
+    QCOMPARE(Utils::countCreatures(*world), initialCount);
 }
 
 // We place a single shark and a single fish in the 2x2 world

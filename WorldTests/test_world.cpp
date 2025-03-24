@@ -19,7 +19,7 @@ class TestWorld : public QObject
        void testTick();
        void testGetNeighboringCellsShuffled();
        void testAddCreatures();
-
+       void testStressTest();
     private:
         World *world;
 };
@@ -90,6 +90,25 @@ void TestWorld::testAddCreatures()
 
     // Assert
     QCOMPARE(Utils::countCreatures(*world), 12);
+}
+
+// We create a 50x50 world and ensure we can execute at least 500 ticks without crashing
+void TestWorld::testStressTest()
+{
+    // Arrange
+    world->initialize(50, 50);
+    world->addCreatures(CreatureType::fish, 10, false);
+    world->addCreatures(CreatureType::shark, 5, false);
+    QCOMPARE(Utils::countCreatures(*world), 15);
+
+    // Act
+    for (int tick=1; tick<=500; tick++)
+    {
+        world->tick();
+    }
+
+    // Assert
+    // success means that the test didn't crash
 }
 
 QTEST_MAIN(TestWorld)
