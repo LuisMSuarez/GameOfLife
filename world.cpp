@@ -46,9 +46,9 @@ void GameOfLifeCore::World::initialize(uint32_t rowCount, uint32_t colCount)
 
 Cell& GameOfLifeCore::World::operator()(const uint32_t row, const uint32_t col)
 {
-    if (row <=0 || col <=0)
+    if (row >= m_rows || col >= m_cols)
     {
-        throw std::runtime_error("Row and col must be greater than zero.");
+        throw std::runtime_error("Row and col must be within wold size.");
     }
 
     return m_map[IX(row,col)];
@@ -128,11 +128,11 @@ std::vector<Cell*> GameOfLifeCore::World::getFreeCellsShuffled() noexcept
     return freeCells;
 }
 
-void GameOfLifeCore::World::checkMapCoordinatesAndAdd(uint32_t row, uint32_t col, Cell &cell, std::vector<Cell*> &list) noexcept
+void GameOfLifeCore::World::checkMapCoordinatesAndAdd(uint32_t row, uint32_t col, std::vector<Cell*> &list) noexcept
 {
     if( (row >= 0) && (col >= 0) & (row < m_rows) && (col < m_cols) )
     {
-        list.push_back(&cell);
+        list.push_back(&(*this)(row, col));
     }
 }
 
@@ -142,14 +142,14 @@ std::vector<Cell*> GameOfLifeCore::World::getNeighboringCellsShuffled(const Cell
     uint32_t col = position.getCol();
     std::vector<Cell*> neighboringCells;
 
-    checkMapCoordinatesAndAdd(row-1, col-1, (*this)(row-1, col-1), neighboringCells);
-    checkMapCoordinatesAndAdd(row-1, col, (*this)(row-1, col), neighboringCells);
-    checkMapCoordinatesAndAdd(row-1, col+1, (*this)(row-1, col+1), neighboringCells);
-    checkMapCoordinatesAndAdd(row, col+1, (*this)(row, col+1), neighboringCells);
-    checkMapCoordinatesAndAdd(row+1, col+1, (*this)(row+1, col+1), neighboringCells);
-    checkMapCoordinatesAndAdd(row+1, col, (*this)(row+1, col), neighboringCells);
-    checkMapCoordinatesAndAdd(row+1, col-1, (*this)(row+1, col-1), neighboringCells);
-    checkMapCoordinatesAndAdd(row, col-1, (*this)(row, col-1), neighboringCells);
+    checkMapCoordinatesAndAdd(row-1, col-1, neighboringCells);
+    checkMapCoordinatesAndAdd(row-1, col, neighboringCells);
+    checkMapCoordinatesAndAdd(row-1, col+1, neighboringCells);
+    checkMapCoordinatesAndAdd(row, col+1, neighboringCells);
+    checkMapCoordinatesAndAdd(row+1, col+1, neighboringCells);
+    checkMapCoordinatesAndAdd(row+1, col, neighboringCells);
+    checkMapCoordinatesAndAdd(row+1, col-1, neighboringCells);
+    checkMapCoordinatesAndAdd(row, col-1, neighboringCells);
 
     // Create a random number generator
     std::random_device rd;

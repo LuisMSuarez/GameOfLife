@@ -125,9 +125,8 @@ class World
          * @brief Checks map coordinates and adds the cell to the list if valid.
          * @param row Row index.
          * @param col Column index.
-         * @param cell Reference to the cell to add.
          * @param list Reference to the list of cells.
          */
-        void checkMapCoordinatesAndAdd(uint32_t row, uint32_t col, Cell &cell, std::vector<Cell*> &list) noexcept;
+        void checkMapCoordinatesAndAdd(uint32_t row, uint32_t col, std::vector<Cell*> &list) noexcept;
 };
 }
