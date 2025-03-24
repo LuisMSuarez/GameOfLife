@@ -27,11 +27,6 @@ class Fish : public Creature
         Fish(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, std::string resourcePath, uint32_t startingAge = 0);
 
         /**
-         * @brief Destructor for the Fish class.
-         */
-        ~Fish();
-
-        /**
          * @brief Performs actions for each tick of the simulation.
          *
          * This function is called every tick to update the state of the fish,

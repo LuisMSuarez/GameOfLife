@@ -8,10 +8,6 @@ GameOfLifeCore::Shark::Shark(World &world, Cell &cell, uint32_t reproductionTime
 {
 }
 
-GameOfLifeCore::Shark::~Shark()
-{
-}
-
 std::string GameOfLifeCore::Shark::getResource()
 {
     std::array<std::string, 1> resources

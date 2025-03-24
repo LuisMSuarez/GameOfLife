@@ -19,11 +19,6 @@ class CreatureFactory
 {
     public:
         /**
-         * @brief Constructor for CreatureFactory.
-         */
-        CreatureFactory();
-
-        /**
          * @brief Creates a creature of the specified type.
          * @param type The type of the creature to create (fish or shark).
          * @param world Reference to the world where the creature will be placed.

@@ -29,11 +29,6 @@ class Creature
         Creature(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, std::string resourcePath, uint32_t startingAge = 0);
 
         /**
-         * @brief Destructor for the Creature class.
-         */
-        ~Creature();
-
-        /**
          * @brief Advances the state of the creature by one tick.
          */
         virtual void tick();
@@ -43,7 +38,7 @@ class Creature
          *
          * @return True if the creature has reached its maximum age, false otherwise.
          */
-        bool reachedMaxAge();
+        bool reachedMaxAge() const;
 
         /**
          * @brief Gets the current cell of the creature.
@@ -77,7 +72,7 @@ class Creature
          *
          * @return True if the creature has reached the time to reproduce, false otherwise.
          */
-        bool reachedTimeToReproduce();
+        bool reachedTimeToReproduce() const;
 
         /**
          * @brief Resets the reproduction timer of the creature.

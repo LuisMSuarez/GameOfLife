@@ -11,8 +11,8 @@ class Cell
         Cell();
         ~Cell();
         void addCreature(Creature *creature);
-        Creature* getCreature();
-        bool isEmpty();
+        Creature* getCreature() const;
+        bool isEmpty() const;
         void removeCreature();
         void destroyCreature();
         void setCoordinates(uint32_t row, uint32_t col);

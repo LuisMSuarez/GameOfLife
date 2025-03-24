@@ -11,10 +11,6 @@ GameOfLifeCore::Creature::Creature(World &world, Cell &cell, uint32_t reproducti
     cell.addCreature(this);
 }
 
-GameOfLifeCore::Creature::~Creature()
-{
-}
-
 void GameOfLifeCore::Creature::moveTo(Cell &cell)
 {
     assert(cell.getCreature() == nullptr); // the destination cell must not already be occupied by another creature
@@ -54,12 +50,12 @@ void GameOfLifeCore::Creature::tick()
     }
 }
 
-bool GameOfLifeCore::Creature::reachedMaxAge()
+bool GameOfLifeCore::Creature::reachedMaxAge() const
 {
     return m_age >= m_max_age;
 }
 
-bool GameOfLifeCore::Creature::reachedTimeToReproduce()
+bool GameOfLifeCore::Creature::reachedTimeToReproduce() const
 {
     return m_reproductionTimer <= 0;
 }

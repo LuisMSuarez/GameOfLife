@@ -8,11 +8,6 @@ GameOfLifeCore::Fish::Fish(World &world, Cell &cell, uint32_t reproductionTicks,
 
 }
 
-GameOfLifeCore::Fish::~Fish()
-{
-
-}
-
 std::string GameOfLifeCore::Fish::getResource()
 {
     std::array<std::string, 1> resources

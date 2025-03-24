@@ -7,11 +7,6 @@
 
 using namespace GameOfLifeCore;
 
-GameOfLifeCore::CreatureFactory::CreatureFactory()
-{
-
-}
-
 Creature& GameOfLifeCore::CreatureFactory::Create(CreatureType type, World &world, Cell &cell, bool randomAge)
 {
     Creature *newCreature = nullptr;

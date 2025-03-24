@@ -27,11 +27,6 @@ class Shark : public Creature
         Shark(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, uint32_t initialEnergy, std::string resourcePath, uint32_t startingAge = 0);
 
         /**
-         * @brief Destructor for the Shark class.
-         */
-        ~Shark();
-
-        /**
          * @brief Performs actions for each tick of the simulation.
          *
          * This function is called every tick to update the state of the shark,

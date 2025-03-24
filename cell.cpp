@@ -35,12 +35,12 @@ void GameOfLifeCore::Cell::addCreature(Creature *creature)
     m_creature = creature;
 }
 
-Creature* GameOfLifeCore::Cell::getCreature()
+Creature* GameOfLifeCore::Cell::getCreature() const
 {
     return m_creature;
 }
 
-bool GameOfLifeCore::Cell::isEmpty()
+bool GameOfLifeCore::Cell::isEmpty() const
 {
     return m_creature == nullptr;
 }
