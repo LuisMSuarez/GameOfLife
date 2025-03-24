@@ -1,12 +1,13 @@
 #include "world.h"
 #include <algorithm>
 #include <random>
+#include <stdexcept> // std::runtime_error
 #include "fish.h"
 #include "shark.h"
 
 using namespace GameOfLifeCore;
 
-GameOfLifeCore::World::World()
+GameOfLifeCore::World::World() noexcept
 {
     m_map.clear();
 }
@@ -21,6 +22,11 @@ GameOfLifeCore::World::~World()
 
 void GameOfLifeCore::World::initialize(uint32_t rowCount, uint32_t colCount)
 {
+    if (rowCount <=0 || colCount <=0)
+    {
+        throw std::runtime_error("Row count and col count must be greater than zero.");
+    }
+
     for (auto &cell : m_map)
     {
         cell.destroyCreature();
@@ -40,6 +46,11 @@ void GameOfLifeCore::World::initialize(uint32_t rowCount, uint32_t colCount)
 
 Cell& GameOfLifeCore::World::operator()(const uint32_t row, const uint32_t col)
 {
+    if (row <=0 || col <=0)
+    {
+        throw std::runtime_error("Row and col must be greater than zero.");
+    }
+
     return m_map[IX(row,col)];
 }
 
@@ -53,7 +64,7 @@ std::int32_t GameOfLifeCore::World::colCount() const noexcept
     return m_cols;
 }
 
-void GameOfLifeCore::World::tick()
+void GameOfLifeCore::World::tick() noexcept
 {
     std::vector<Creature*> creatures;
 
@@ -96,7 +107,7 @@ void GameOfLifeCore::World::tick()
     }
 }
 
-std::vector<Cell*> GameOfLifeCore::World::getFreeCellsShuffled()
+std::vector<Cell*> GameOfLifeCore::World::getFreeCellsShuffled() noexcept
 {
     std::vector<Cell*> freeCells;
     for (auto &cell : m_map)
@@ -117,7 +128,7 @@ std::vector<Cell*> GameOfLifeCore::World::getFreeCellsShuffled()
     return freeCells;
 }
 
-void GameOfLifeCore::World::checkMapCoordinatesAndAdd(uint32_t row, uint32_t col, Cell &cell, std::vector<Cell*> &list)
+void GameOfLifeCore::World::checkMapCoordinatesAndAdd(uint32_t row, uint32_t col, Cell &cell, std::vector<Cell*> &list) noexcept
 {
     if( (row >= 0) && (col >= 0) & (row < m_rows) && (col < m_cols) )
     {
@@ -125,7 +136,7 @@ void GameOfLifeCore::World::checkMapCoordinatesAndAdd(uint32_t row, uint32_t col
     }
 }
 
-std::vector<Cell*> GameOfLifeCore::World::getNeighboringCellsShuffled(const Cell &position)
+std::vector<Cell*> GameOfLifeCore::World::getNeighboringCellsShuffled(const Cell &position) noexcept
 {
     uint32_t row = position.getRow();
     uint32_t col = position.getCol();
@@ -150,7 +161,7 @@ std::vector<Cell*> GameOfLifeCore::World::getNeighboringCellsShuffled(const Cell
     return neighboringCells;
 }
 
-void GameOfLifeCore::World::addCreatures(CreatureType type, uint32_t count, bool randomAge)
+void GameOfLifeCore::World::addCreatures(CreatureType type, uint32_t count, bool randomAge) noexcept
 {
     Creature *newCreature = nullptr;
     auto freeCells = getFreeCellsShuffled();
@@ -178,12 +189,12 @@ std::vector<Cell>::iterator GameOfLifeCore::World::end() noexcept
     return m_map.end();
 }
 
-std::vector<Cell>::const_iterator GameOfLifeCore::World::cbegin()
+std::vector<Cell>::const_iterator GameOfLifeCore::World::cbegin() noexcept
 {
     return m_map.cbegin();
 }
 
-std::vector<Cell>::const_iterator GameOfLifeCore::World::cend()
+std::vector<Cell>::const_iterator GameOfLifeCore::World::cend() noexcept
 {
     return m_map.cend();
 }

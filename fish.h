@@ -24,7 +24,7 @@ class Fish : public Creature
          * @param resourcePath Path to the resource file associated with the fish.
          * @param startingAge Optional parameter to set the starting age of the fish. Default is 0.
          */
-        Fish(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, std::string resourcePath, uint32_t startingAge = 0);
+        Fish(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, std::string resourcePath, uint32_t startingAge = 0) noexcept;
 
         /**
          * @brief Performs actions for each tick of the simulation.
@@ -32,7 +32,7 @@ class Fish : public Creature
          * This function is called every tick to update the state of the fish,
          * including movement, aging, and reproduction.
          */
-        void tick() override;
+        void tick() noexcept override;
 
         /** Static member variable representing the number of ticks required for reproduction. */
         static uint32_t s_reproductionTicks;
@@ -44,6 +44,6 @@ class Fish : public Creature
          * @brief Gets the resource path associated with the fish.
          * @return The resource path as a string.
          */
-        static std::string getResource();
+        static std::string getResource() noexcept;
 };
 }

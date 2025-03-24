@@ -24,7 +24,7 @@ class Shark : public Creature
          * @param resourcePath Path to the resource file associated with the shark.
          * @param startingAge Optional parameter to set the starting age of the shark. Default is 0.
          */
-        Shark(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, uint32_t initialEnergy, std::string resourcePath, uint32_t startingAge = 0);
+        Shark(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, uint32_t initialEnergy, std::string resourcePath, uint32_t startingAge = 0) noexcept;
 
         /**
          * @brief Performs actions for each tick of the simulation.
@@ -32,7 +32,7 @@ class Shark : public Creature
          * This function is called every tick to update the state of the shark,
          * including movement, aging, energy management, and reproduction.
          */
-        void tick() override;
+        void tick() noexcept override;
 
         /** Static member variable representing the number of ticks required for reproduction. */
         static uint32_t s_reproductionTicks;
@@ -50,7 +50,7 @@ class Shark : public Creature
          * @brief Gets the resource path associated with the shark.
          * @return The resource path as a string.
          */
-        static std::string getResource();
+        static std::string getResource() noexcept;
 
     private:
         int m_energy; /**< Current energy of the shark. */
@@ -59,17 +59,17 @@ class Shark : public Creature
          * @brief Increases the shark's energy.
          * @param amount The amount of energy to gain.
          */
-        void gainEnergy(int amount);
+        void gainEnergy(int amount) noexcept;
 
         /**
          * @brief Decreases the shark's energy.
          * @param amount The amount of energy to lose.
          */
-        void loseEnergy(int amount);
+        void loseEnergy(int amount) noexcept;
 
         /**
          * @brief Checks the shark's energy and updates its state accordingly.
          */
-        void checkEnergy();
+        void checkEnergy() noexcept;
 };
 }

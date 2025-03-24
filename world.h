@@ -22,7 +22,7 @@ class World
         /**
          * @brief Constructs a World object.
          */
-        World();
+        World() noexcept;
 
         /**
          * @brief Destructor for the World class.
@@ -47,7 +47,7 @@ class World
         /**
          * @brief Advances the simulation by one tick.
          */
-        void tick();
+        void tick() noexcept;
 
         /**
          * @brief Adds creatures of the specified type to the world.
@@ -55,14 +55,14 @@ class World
          * @param count The number of creatures to add.
          * @param randomAge Optional parameter to assign a random age to the creatures. Default is false.
          */
-        void addCreatures(CreatureType type, uint32_t count, bool randomAge = false);
+        void addCreatures(CreatureType type, uint32_t count, bool randomAge = false) noexcept;
 
         /**
          * @brief Gets neighboring cells of a given cell in a shuffled order.
          * @param position Reference to the cell whose neighbors are to be retrieved.
          * @return A vector of pointers to neighboring cells.
          */
-        std::vector<Cell*> getNeighboringCellsShuffled(const Cell &position);
+        std::vector<Cell*> getNeighboringCellsShuffled(const Cell &position) noexcept;
 
         /**
          * @brief Gets the number of rows in the world.
@@ -94,13 +94,13 @@ class World
          * @brief Gets a constant iterator to the beginning of the cell map.
          * @return Constant iterator to the beginning of the cell map.
          */
-        std::vector<Cell>::const_iterator cbegin();
+        std::vector<Cell>::const_iterator cbegin() noexcept;
 
         /**
          * @brief Gets a constant iterator to the end of the cell map.
          * @return Constant iterator to the end of the cell map.
          */
-        std::vector<Cell>::const_iterator cend();
+        std::vector<Cell>::const_iterator cend() noexcept;
 
     private:
         uint32_t m_cols; /**< Number of columns in the world. */
@@ -111,7 +111,7 @@ class World
          * @brief Gets a shuffled list of free cells.
          * @return A vector of pointers to free cells.
          */
-        std::vector<Cell*> getFreeCellsShuffled();
+        std::vector<Cell*> getFreeCellsShuffled() noexcept;
 
         /**
          * @brief Gets the index of a cell given its row and column.
@@ -128,6 +128,6 @@ class World
          * @param cell Reference to the cell to add.
          * @param list Reference to the list of cells.
          */
-        void checkMapCoordinatesAndAdd(uint32_t row, uint32_t col, Cell &cell, std::vector<Cell*> &list);
+        void checkMapCoordinatesAndAdd(uint32_t row, uint32_t col, Cell &cell, std::vector<Cell*> &list) noexcept;
 };
 }
