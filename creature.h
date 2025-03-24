@@ -26,50 +26,45 @@ class Creature
          * @param resourcePath Path to the resource file.
          * @param startingAge Initial age of the creature.
          */
-        Creature(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, std::string resourcePath, uint32_t startingAge = 0);
-
-        /**
-         * @brief Destructor for the Creature class.
-         */
-        ~Creature();
+        Creature(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, std::string resourcePath, uint32_t startingAge = 0) noexcept;
 
         /**
          * @brief Advances the state of the creature by one tick.
          */
-        virtual void tick();
+        virtual void tick() noexcept;
 
         /**
          * @brief Checks if the creature has reached its maximum age.
          *
          * @return True if the creature has reached its maximum age, false otherwise.
          */
-        bool reachedMaxAge();
+        bool reachedMaxAge() const noexcept;
 
         /**
          * @brief Gets the current cell of the creature.
          *
          * @return Reference to the current Cell object.
          */
-        Cell& getCell();
+        Cell& getCell() noexcept;
 
         /**
          * @brief Tags the creature for deletion.
          */
-        void tagForDeletion();
+        void tagForDeletion() noexcept;
 
         /**
          * @brief Checks if the creature is tagged for deletion.
          *
          * @return True if tagged for deletion, false otherwise.
          */
-        bool isTaggedForDeletion();
+        bool isTaggedForDeletion() noexcept;
 
         /**
          * @brief Gets the resource path of the creature.
          *
          * @return The resource path as a string.
          */
-        std::string getResourcePath();
+        std::string getResourcePath() noexcept;
 
     protected:
         /**
@@ -77,19 +72,19 @@ class Creature
          *
          * @return True if the creature has reached the time to reproduce, false otherwise.
          */
-        bool reachedTimeToReproduce();
+        bool reachedTimeToReproduce() const noexcept;
 
         /**
          * @brief Resets the reproduction timer of the creature.
          */
-        void resetTimeToReproduce();
+        void resetTimeToReproduce() noexcept;
 
         /**
          * @brief Moves the creature to a new cell.
          *
          * @param cell Reference to the new Cell object.
          */
-        void moveTo(Cell &cell);
+        void moveTo(Cell &cell) noexcept;
 
         uint32_t m_age;                 ///< Age of the creature.
         uint32_t m_reproductionTimer;   ///< Timer for reproduction.

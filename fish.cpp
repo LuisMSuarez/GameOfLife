@@ -2,18 +2,13 @@
 
 using namespace GameOfLifeCore;
 
-GameOfLifeCore::Fish::Fish(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, std::string resourcePath, uint32_t startingAge)
+GameOfLifeCore::Fish::Fish(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, std::string resourcePath, uint32_t startingAge) noexcept
     : Creature(world, cell, reproductionTicks, maxAge, resourcePath, startingAge)
 {
 
 }
 
-GameOfLifeCore::Fish::~Fish()
-{
-
-}
-
-std::string GameOfLifeCore::Fish::getResource()
+std::string GameOfLifeCore::Fish::getResource() noexcept
 {
     std::array<std::string, 1> resources
         {
@@ -33,7 +28,7 @@ std::string GameOfLifeCore::Fish::getResource()
 uint32_t Fish::s_reproductionTicks = 10;
 uint32_t Fish::s_maxAge = 35;
 
-void GameOfLifeCore::Fish::tick()
+void GameOfLifeCore::Fish::tick() noexcept
 {
     Creature::tick();
 

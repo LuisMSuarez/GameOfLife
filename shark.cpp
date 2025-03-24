@@ -3,16 +3,12 @@
 
 using namespace GameOfLifeCore;
 
-GameOfLifeCore::Shark::Shark(World &world, Cell &cell, uint32_t reproductionTimer, uint32_t maxAge, uint32_t initialEnergy, std::string resourcePath, uint32_t startingAge)
+GameOfLifeCore::Shark::Shark(World &world, Cell &cell, uint32_t reproductionTimer, uint32_t maxAge, uint32_t initialEnergy, std::string resourcePath, uint32_t startingAge) noexcept
     : Creature(world, cell, reproductionTimer, maxAge, resourcePath, startingAge), m_energy(initialEnergy)
 {
 }
 
-GameOfLifeCore::Shark::~Shark()
-{
-}
-
-std::string GameOfLifeCore::Shark::getResource()
+std::string GameOfLifeCore::Shark::getResource() noexcept
 {
     std::array<std::string, 1> resources
     {
@@ -34,7 +30,7 @@ uint32_t Shark::s_maxAge = 50;
 uint32_t Shark::s_initialEnergy = 5;
 uint32_t Shark::s_energyPerFish = 5;
 
-void GameOfLifeCore::Shark::tick()
+void GameOfLifeCore::Shark::tick() noexcept
 {
     Creature::tick();
     loseEnergy(1); // Lose energy every tick
@@ -84,17 +80,17 @@ void GameOfLifeCore::Shark::tick()
     checkEnergy(); // Check if the shark runs out of energy
 }
 
-void GameOfLifeCore::Shark::gainEnergy(int amount)
+void GameOfLifeCore::Shark::gainEnergy(int amount) noexcept
 {
     m_energy += amount;
 }
 
-void GameOfLifeCore::Shark::loseEnergy(int amount)
+void GameOfLifeCore::Shark::loseEnergy(int amount) noexcept
 {
     m_energy -= amount;
 }
 
-void GameOfLifeCore::Shark::checkEnergy()
+void GameOfLifeCore::Shark::checkEnergy() noexcept
 {
     if (m_energy <= 0)
     {
