@@ -43,9 +43,9 @@ class Creature
         /**
          * @brief Gets the current cell of the creature.
          *
-         * @return Reference to the current Cell object.
+         * @return Pointer to the current Cell object.
          */
-        Cell& getCell() noexcept;
+        Cell* getCell() noexcept;
 
         /**
          * @brief Tags the creature for deletion.

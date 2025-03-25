@@ -26,11 +26,16 @@ std::string GameOfLifeCore::Fish::getResource() noexcept
 }
 
 uint32_t Fish::s_reproductionTicks = 10;
-uint32_t Fish::s_maxAge = 35;
+uint32_t Fish::s_maxAge = 30;
 
 void GameOfLifeCore::Fish::tick() noexcept
 {
     Creature::tick();
+
+    if (isTaggedForDeletion())
+    {
+        return;
+    }
 
     auto neighboringCells = m_world.getNeighboringCellsShuffled(*m_cell);
     for (const auto cell: neighboringCells)

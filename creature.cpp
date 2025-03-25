@@ -9,6 +9,7 @@ GameOfLifeCore::Creature::Creature(World &world, Cell &cell, uint32_t reproducti
     m_reproductionTimer = reproductionTicks;
     m_taggedForDeletion = false;
     cell.addCreature(this);
+    world.registerCreature(*this);
 }
 
 void GameOfLifeCore::Creature::moveTo(Cell &cell) noexcept
@@ -19,9 +20,9 @@ void GameOfLifeCore::Creature::moveTo(Cell &cell) noexcept
     m_cell = &cell;
 }
 
-Cell& GameOfLifeCore::Creature::getCell() noexcept
+Cell* GameOfLifeCore::Creature::getCell() noexcept
 {
-    return *m_cell;
+    return m_cell;
 }
 
 void GameOfLifeCore::Creature::tagForDeletion() noexcept
@@ -44,6 +45,11 @@ std::string GameOfLifeCore::Creature::getResourcePath() noexcept
 void GameOfLifeCore::Creature::tick() noexcept
 {
     m_age++;
+    if (reachedMaxAge())
+    {
+        tagForDeletion();
+    }
+
     if (m_reproductionTimer > 0)
     {
         m_reproductionTimer--;

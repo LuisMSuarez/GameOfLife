@@ -3,6 +3,7 @@
 #include <vector>    // std::vector
 #include <cstddef>   // std::size_t
 #include <cstdint>   // std::int*_t
+#include <unordered_set> // std::unordered_set
 #include "cell.h"
 #include "creatureType.h"
 #include "creaturefactory.h"
@@ -58,6 +59,12 @@ class World
         void addCreatures(CreatureType type, uint32_t count, bool randomAge = false) noexcept;
 
         /**
+         * @brief Registers a creature to the list of creatures that exist in the world.
+         * @param creature The creature object.
+         */
+        void registerCreature(Creature& creature);
+
+        /**
          * @brief Gets neighboring cells of a given cell in a shuffled order.
          * @param position Reference to the cell whose neighbors are to be retrieved.
          * @return A vector of pointers to neighboring cells.
@@ -106,6 +113,7 @@ class World
         uint32_t m_cols; /**< Number of columns in the world. */
         uint32_t m_rows; /**< Number of rows in the world. */
         std::vector<Cell> m_map; /**< Map of cells in the world. */
+        std::unordered_set<Creature*> m_creatures; /**< Set of creatures in the world. */
 
         /**
          * @brief Gets a shuffled list of free cells.

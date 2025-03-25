@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     m_world.initialize(rows, cols);
     m_world.addCreatures(CreatureType::fish, 10, /* randomAge */ true);
-    m_world.addCreatures(CreatureType::shark, 2, /* randomAge */ true);
+    m_world.addCreatures(CreatureType::shark, 5, /* randomAge */ true);
     initializeWidgets();
     renderWorld();
 
