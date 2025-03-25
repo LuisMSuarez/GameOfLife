@@ -90,17 +90,14 @@ void GameOfLifeCore::World::tick() noexcept
     {
         if ((*creature_iterator)->isTaggedForDeletion())
         {
-            // we do not invoke cell.destroyCreature as this may instead delete
-            // a predator that ate this creature and is now occupying its same cell
             auto creature = *creature_iterator;
+            auto cell = creature->getCell();
+            if (cell != nullptr) // a creature that has been eaten by another creature no longer occupies its cell
+            {
+                cell->removeCreature();
+            }
             creature_iterator = m_creatures.erase(creature_iterator); // erase and get the next valid iterator
             delete creature;
-        }
-        else if ((*creature_iterator)->reachedMaxAge())
-        {
-            auto &cell = (*creature_iterator)->getCell();
-            creature_iterator = m_creatures.erase(creature_iterator); // erase and get the next valid iterator
-            cell.destroyCreature();
         }
         else
         {

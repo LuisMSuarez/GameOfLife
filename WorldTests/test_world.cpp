@@ -52,8 +52,8 @@ void TestWorld::testTick()
 {
     // Arrange
     world->initialize(10, 10);
-    world->addCreatures(CreatureType::fish, 10, false);
-    world->addCreatures(CreatureType::shark, 5, false);
+    world->addCreatures(CreatureType::fish, 10);
+    world->addCreatures(CreatureType::shark, 5);
     QCOMPARE(Utils::countCreatures(*world), 15);
 
     // Act
@@ -97,8 +97,8 @@ void TestWorld::testStressTest()
 {
     // Arrange
     world->initialize(50, 50);
-    world->addCreatures(CreatureType::fish, 10, false);
-    world->addCreatures(CreatureType::shark, 5, false);
+    world->addCreatures(CreatureType::fish, 10);
+    world->addCreatures(CreatureType::shark, 5);
     QCOMPARE(Utils::countCreatures(*world), 15);
 
     // Act

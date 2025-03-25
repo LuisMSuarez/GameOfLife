@@ -27,12 +27,18 @@ std::string GameOfLifeCore::Shark::getResource() noexcept
 
 uint32_t Shark::s_reproductionTicks = 15;
 uint32_t Shark::s_maxAge = 50;
-uint32_t Shark::s_initialEnergy = 5;
-uint32_t Shark::s_energyPerFish = 5;
+uint32_t Shark::s_initialEnergy = 10;
+uint32_t Shark::s_energyPerFish = 10;
 
 void GameOfLifeCore::Shark::tick() noexcept
 {
     Creature::tick();
+
+    if (isTaggedForDeletion())
+    {
+        return;
+    }
+
     loseEnergy(1); // Lose energy every tick
 
     auto *oldPosition = m_cell;
