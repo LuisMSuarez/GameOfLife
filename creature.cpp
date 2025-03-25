@@ -9,6 +9,7 @@ GameOfLifeCore::Creature::Creature(World &world, Cell &cell, uint32_t reproducti
     m_reproductionTimer = reproductionTicks;
     m_taggedForDeletion = false;
     cell.addCreature(this);
+    world.registerCreature(*this);
 }
 
 void GameOfLifeCore::Creature::moveTo(Cell &cell) noexcept

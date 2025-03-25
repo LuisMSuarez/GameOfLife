@@ -42,6 +42,8 @@ void GameOfLifeCore::World::initialize(uint32_t rowCount, uint32_t colCount)
             this->operator()(row,col).setCoordinates(row, col);
         }
     }
+
+    m_creatures.clear();
 }
 
 Cell& GameOfLifeCore::World::operator()(const uint32_t row, const uint32_t col)
@@ -66,23 +68,15 @@ std::int32_t GameOfLifeCore::World::colCount() const noexcept
 
 void GameOfLifeCore::World::tick() noexcept
 {
-    std::vector<Creature*> creatures;
-
     // Step 1:: enumerate all creatures
     // ensure we call tick() for each creature exactly once by forming
     // a collection with all the creatures in the map, instead of by iterating through the map
     // as we may be calling tick() on the same creature multiple times (due to movement) otherwise
-    for (auto &cell : m_map)
-    {
-        if (auto creature = cell.getCreature(); creature != nullptr)
-        {
-            creatures.push_back(creature);
-        }
-    }
+    // this is achieved with m_creatures;
 
     // Step 2: call the tick function on all creature, keeping in mind that the creature may have already been
     // 'eaten' by the movement of a prior creature
-    for (const auto creature: creatures)
+    for (const auto creature: m_creatures)
     {
         if (!creature->isTaggedForDeletion())
         {
@@ -91,18 +85,26 @@ void GameOfLifeCore::World::tick() noexcept
     }
 
     // Step 3: cleanup creatures that have either been eaten or died by old age
-    for (const auto creature: creatures)
+    // we need to exercise special care when deleting creature in a loop that is iterating over the collection itself
+    for (auto creature_iterator=m_creatures.begin(); creature_iterator != m_creatures.end();)
     {
-        if (creature->isTaggedForDeletion())
+        if ((*creature_iterator)->isTaggedForDeletion())
         {
             // we do not invoke cell.destroyCreature as this may instead delete
             // a predator that ate this creature and is now occupying its same cell
+            auto creature = *creature_iterator;
+            creature_iterator = m_creatures.erase(creature_iterator); // erase and get the next valid iterator
             delete creature;
         }
-        else if (creature->reachedMaxAge())
+        else if ((*creature_iterator)->reachedMaxAge())
         {
-            auto &cell = creature->getCell();
+            auto &cell = (*creature_iterator)->getCell();
+            creature_iterator = m_creatures.erase(creature_iterator); // erase and get the next valid iterator
             cell.destroyCreature();
+        }
+        else
+        {
+            creature_iterator++;
         }
     }
 }
@@ -177,6 +179,11 @@ void GameOfLifeCore::World::addCreatures(CreatureType type, uint32_t count, bool
         CreatureFactory::Create(type, *this, *cell, randomAge);
         freeCells.pop_back();
     }
+}
+
+void GameOfLifeCore::World::registerCreature(Creature& creature)
+{
+    m_creatures.insert(&creature);
 }
 
 std::vector<Cell>::iterator GameOfLifeCore::World::begin() noexcept
