@@ -23,9 +23,9 @@ class CreatureFactory
          * @param type The type of the creature to create (fish or shark).
          * @param world Reference to the world where the creature will be placed.
          * @param cell Reference to the cell where the creature will be placed.
-         * @param randomAge Optional parameter to assign a random age to the creature. Default is false.
+         * @param randomInitialization Optional parameter to randomize initial values for the creature so that not all creatures are initialized the same. Default is false.
          * @return A reference to the created creature.
          */
-        static Creature& Create(CreatureType type, World &world, Cell &cell, bool randomAge = false);
+        static Creature& Create(CreatureType type, World &world, Cell &cell, bool randomInitialization = false);
 };
 }

@@ -3,8 +3,8 @@
 
 using namespace GameOfLifeCore;
 
-GameOfLifeCore::Shark::Shark(World &world, Cell &cell, uint32_t reproductionTimer, uint32_t maxAge, uint32_t initialEnergy, std::string resourcePath, uint32_t startingAge) noexcept
-    : Creature(world, cell, reproductionTimer, maxAge, resourcePath, startingAge), m_energy(initialEnergy)
+GameOfLifeCore::Shark::Shark(World &world, Cell &cell, uint32_t reproductionTimer, uint32_t maxAge, uint32_t initialEnergy, std::string resourcePath, uint32_t startingAge, uint32_t startingReproductionTimer) noexcept
+    : Creature(world, cell, reproductionTimer, maxAge, resourcePath, startingAge, startingReproductionTimer), m_energy(initialEnergy)
 {
 }
 

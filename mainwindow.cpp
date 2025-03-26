@@ -18,14 +18,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    Fish::s_reproductionTicks = 3;
-    Fish::s_maxAge = 35;
-
-    Shark::s_reproductionTicks = 25;
-    Shark::s_maxAge = 40;
-
-    int rows = 10;
-    int cols = 10;
+    int rows = 15;
+    int cols = 15;
     cellHeight = this->geometry().height()/rows;
     cellWidth = this->geometry().width()/cols;
 

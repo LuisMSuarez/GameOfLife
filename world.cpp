@@ -1,6 +1,5 @@
 #include "world.h"
 #include <algorithm>
-#include <random>
 #include <stdexcept> // std::runtime_error
 #include "fish.h"
 #include "shark.h"
@@ -10,6 +9,10 @@ using namespace GameOfLifeCore;
 GameOfLifeCore::World::World() noexcept
 {
     m_map.clear();
+
+    // Create a random number generator
+    std::random_device rd;
+    m_randomGenerator = std::mt19937(rd());
 }
 
 GameOfLifeCore::World::~World()
@@ -70,38 +73,34 @@ void GameOfLifeCore::World::tick() noexcept
 {
     // Step 1:: enumerate all creatures
     // ensure we call tick() for each creature exactly once by forming
-    // a collection with all the creatures in the map, instead of by iterating through the map
+    // a new collection with all the creatures in the map at the start of the tick, instead of by iterating through the map cells
     // as we may be calling tick() on the same creature multiple times (due to movement) otherwise
-    // this is achieved with m_creatures;
-
-    // Step 2: call the tick function on all creature, keeping in mind that the creature may have already been
-    // 'eaten' by the movement of a prior creature
+    // or basing off m_creatures, where new creatures are added and removed during the tick itself
+    std::vector<Creature*> creatures;
     for (const auto creature: m_creatures)
     {
-        if (!creature->isTaggedForDeletion())
-        {
-            creature->tick();
-        }
+        creatures.push_back(creature);
+    }
+
+    // Step 2: call the tick function on all creatures
+    for (const auto creature: creatures)
+    {
+        creature->tick();
     }
 
     // Step 3: cleanup creatures that have either been eaten or died by old age
     // we need to exercise special care when deleting creature in a loop that is iterating over the collection itself
-    for (auto creature_iterator=m_creatures.begin(); creature_iterator != m_creatures.end();)
+    for (const auto creature: creatures)
     {
-        if ((*creature_iterator)->isTaggedForDeletion())
+        if (creature->isTaggedForDeletion())
         {
-            auto creature = *creature_iterator;
             auto cell = creature->getCell();
             if (cell != nullptr) // a creature that has been eaten by another creature no longer occupies its cell
             {
                 cell->removeCreature();
             }
-            creature_iterator = m_creatures.erase(creature_iterator); // erase and get the next valid iterator
+            m_creatures.erase(creature); // erase and get the next valid iterator
             delete creature;
-        }
-        else
-        {
-            creature_iterator++;
         }
     }
 }
@@ -117,12 +116,8 @@ std::vector<Cell*> GameOfLifeCore::World::getFreeCellsShuffled() noexcept
         }
     }
 
-    // Create a random number generator
-    std::random_device rd;
-    std::mt19937 g(rd());
-
     // Shuffle the vector
-    std::shuffle(freeCells.begin(), freeCells.end(), g);
+    std::shuffle(freeCells.begin(), freeCells.end(), m_randomGenerator);
 
     return freeCells;
 }
@@ -150,12 +145,8 @@ std::vector<Cell*> GameOfLifeCore::World::getNeighboringCellsShuffled(const Cell
     checkMapCoordinatesAndAdd(row+1, col-1, neighboringCells);
     checkMapCoordinatesAndAdd(row, col-1, neighboringCells);
 
-    // Create a random number generator
-    std::random_device rd;
-    std::mt19937 g(rd());
-
     // Shuffle the vector
-    std::shuffle(neighboringCells.begin(), neighboringCells.end(), g);
+    std::shuffle(neighboringCells.begin(), neighboringCells.end(), m_randomGenerator);
 
     return neighboringCells;
 }
