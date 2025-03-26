@@ -52,8 +52,8 @@ void TestWorld::testTick()
 {
     // Arrange
     world->initialize(10, 10);
-    world->addCreatures(CreatureType::fish, 10);
-    world->addCreatures(CreatureType::shark, 5);
+    world->createCreatures(CreatureType::fish, 10);
+    world->createCreatures(CreatureType::shark, 5);
     QCOMPARE(Utils::countCreatures(*world), 15);
 
     // Act
@@ -85,24 +85,24 @@ void TestWorld::testAddCreatures()
     world->initialize(10, 10);
 
     // Act
-    world->addCreatures(CreatureType::fish, 10);
-    world->addCreatures(CreatureType::fish, 2);
+    world->createCreatures(CreatureType::fish, 10);
+    world->createCreatures(CreatureType::fish, 2);
 
     // Assert
     QCOMPARE(Utils::countCreatures(*world), 12);
 }
 
-// We create a 50x50 world and ensure we can execute at least 500 ticks without crashing
+// We create a 50x50 world and ensure we can execute at least 1000 ticks without crashing and before the test times out
 void TestWorld::testStressTest()
 {
     // Arrange
     world->initialize(50, 50);
-    world->addCreatures(CreatureType::fish, 10);
-    world->addCreatures(CreatureType::shark, 5);
+    world->createCreatures(CreatureType::fish, 10);
+    world->createCreatures(CreatureType::shark, 5);
     QCOMPARE(Utils::countCreatures(*world), 15);
 
     // Act
-    for (int tick=1; tick<=500; tick++)
+    for (int tick=1; tick<=1000; tick++)
     {
         world->tick();
     }

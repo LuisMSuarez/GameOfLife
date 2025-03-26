@@ -74,7 +74,7 @@ void TestFish::testReproduce()
 {
     // Arrange
     world->initialize(2, 2);
-    world->addCreatures(CreatureType::fish, 1);
+    world->createCreatures(CreatureType::fish, 1);
 
     // ensure that the fish will be able to reproduce before it dies due to max age
     QVERIFY(Fish::s_reproductionTicks < Fish::s_maxAge);

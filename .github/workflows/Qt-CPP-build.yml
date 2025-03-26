@@ -44,7 +44,7 @@ jobs:
     - name: Test-WorldTests
       if: matrix.os == 'ubuntu-latest'
       working-directory: ${{github.workspace}}/build/WorldTests
-      run: ctest -V -O test_world.log --timeout 30 -C ${{env.BUILD_TYPE}}
+      run: ctest -V -O test_world.log --timeout 5 -C ${{env.BUILD_TYPE}}
     - name: Test-SharkTests
       if: matrix.os == 'ubuntu-latest'
       working-directory: ${{github.workspace}}/build/SharkTests

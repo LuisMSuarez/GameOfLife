@@ -23,8 +23,9 @@ class Shark : public Creature
          * @param initialEnergy Initial energy of the shark.
          * @param resourcePath Path to the resource file associated with the shark.
          * @param startingAge Optional parameter to set the starting age of the shark. Default is 0.
+         * @param startingReproductionTimer Initial value of the reproduction timer.
          */
-        Shark(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, uint32_t initialEnergy, std::string resourcePath, uint32_t startingAge = 0) noexcept;
+        Shark(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, uint32_t initialEnergy, std::string resourcePath, uint32_t startingAge = 0, uint32_t startingReproductionTimer = 0) noexcept;
 
         /**
          * @brief Performs actions for each tick of the simulation.

@@ -23,8 +23,9 @@ class Fish : public Creature
          * @param maxAge Maximum age of the fish.
          * @param resourcePath Path to the resource file associated with the fish.
          * @param startingAge Optional parameter to set the starting age of the fish. Default is 0.
+         * @param startingReproductionTimer Initial value of the reproduction timer.
          */
-        Fish(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, std::string resourcePath, uint32_t startingAge = 0) noexcept;
+        Fish(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, std::string resourcePath, uint32_t startingAge = 0, uint32_t startingReproductionTimer = Fish::s_reproductionTicks) noexcept;
 
         /**
          * @brief Performs actions for each tick of the simulation.

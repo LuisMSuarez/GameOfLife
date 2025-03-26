@@ -25,8 +25,9 @@ class Creature
          * @param maxAge Maximum age of the creature.
          * @param resourcePath Path to the resource file.
          * @param startingAge Initial age of the creature.
+         * @param startingReproductionTimer Initial value of the reproduction timer.
          */
-        Creature(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, std::string resourcePath, uint32_t startingAge = 0) noexcept;
+        Creature(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, std::string resourcePath, uint32_t startingAge = 0, uint32_t startingReproductionTimer = 0) noexcept;
 
         /**
          * @brief Advances the state of the creature by one tick.

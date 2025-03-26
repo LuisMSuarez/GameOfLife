@@ -58,7 +58,7 @@ void TestShark::testEnergyDepletion()
 {
     // Arrange
     world->initialize(2, 2);
-    world->addCreatures(CreatureType::shark, 1);
+    world->createCreatures(CreatureType::shark, 1);
 
     // ensure that the energy depletion event happens before the max age event where the shark inevitably dies
     QVERIFY(Shark::s_initialEnergy < Shark::s_maxAge);
@@ -90,7 +90,7 @@ void TestShark::testGainEnergy()
 {
     // Arrange
     world->initialize(2, 2);
-    world->addCreatures(CreatureType::shark, 1);
+    world->createCreatures(CreatureType::shark, 1);
 
     // ensure that the energy depletion event happens before the max age event where the shark inevitably dies
     QVERIFY(Shark::s_initialEnergy < Shark::s_maxAge);
@@ -109,7 +109,7 @@ void TestShark::testGainEnergy()
     }
 
     // add a fish to the world so the shark can eat it and gain energy
-    world->addCreatures(CreatureType::fish, 1);
+    world->createCreatures(CreatureType::fish, 1);
 
     // one more tick and the shark should not die and the fish should have been eaten
     world->tick();
@@ -124,8 +124,8 @@ void TestShark::testEatFish()
 {
     // Arrange
     world->initialize(2, 2);
-    world->addCreatures(CreatureType::shark, 1);
-    world->addCreatures(CreatureType::fish, 1);
+    world->createCreatures(CreatureType::shark, 1);
+    world->createCreatures(CreatureType::fish, 1);
 
     // ensure that the energy depletion event will not happen upon a single tick
     QVERIFY(Shark::s_initialEnergy > 1);

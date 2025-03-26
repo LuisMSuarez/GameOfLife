@@ -4,6 +4,7 @@
 #include <cstddef>   // std::size_t
 #include <cstdint>   // std::int*_t
 #include <unordered_set> // std::unordered_set
+#include <random>
 #include "cell.h"
 #include "creatureType.h"
 #include "creaturefactory.h"
@@ -51,18 +52,18 @@ class World
         void tick() noexcept;
 
         /**
-         * @brief Adds creatures of the specified type to the world.
+         * @brief Creates creatures of the specified type to the world.
          * @param type The type of creatures to add (fish or shark).
          * @param count The number of creatures to add.
          * @param randomAge Optional parameter to assign a random age to the creatures. Default is false.
          */
-        void addCreatures(CreatureType type, uint32_t count, bool randomAge = false) noexcept;
+        void createCreatures(CreatureType type, uint32_t count, bool randomAge = false) noexcept;
 
         /**
-         * @brief Registers a creature to the list of creatures that exist in the world.
+         * @brief Adds a creature to the list of creatures that exist in the world.
          * @param creature The creature object.
          */
-        void registerCreature(Creature& creature);
+        void addCreature(Creature& creature);
 
         /**
          * @brief Gets neighboring cells of a given cell in a shuffled order.
@@ -114,6 +115,7 @@ class World
         uint32_t m_rows; /**< Number of rows in the world. */
         std::vector<Cell> m_map; /**< Map of cells in the world. */
         std::unordered_set<Creature*> m_creatures; /**< Set of creatures in the world. */
+        std::mt19937 m_randomGenerator;
 
         /**
          * @brief Gets a shuffled list of free cells.

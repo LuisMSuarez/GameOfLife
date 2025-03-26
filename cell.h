@@ -10,7 +10,7 @@ class Cell
     public:
         Cell() noexcept;
         ~Cell();
-        void addCreature(Creature *creature);
+        void addCreature(Creature& creature);
         Creature* getCreature() const noexcept;
         bool isEmpty() const noexcept;
         void removeCreature() noexcept;
