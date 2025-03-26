@@ -151,7 +151,7 @@ std::vector<Cell*> GameOfLifeCore::World::getNeighboringCellsShuffled(const Cell
     return neighboringCells;
 }
 
-void GameOfLifeCore::World::addCreatures(CreatureType type, uint32_t count, bool randomAge) noexcept
+void GameOfLifeCore::World::createCreatures(CreatureType type, uint32_t count, bool randomAge) noexcept
 {
     Creature *newCreature = nullptr;
     auto freeCells = getFreeCellsShuffled();
@@ -169,7 +169,7 @@ void GameOfLifeCore::World::addCreatures(CreatureType type, uint32_t count, bool
     }
 }
 
-void GameOfLifeCore::World::registerCreature(Creature& creature)
+void GameOfLifeCore::World::addCreature(Creature& creature)
 {
     m_creatures.insert(&creature);
 }

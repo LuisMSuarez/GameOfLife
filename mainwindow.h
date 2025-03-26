@@ -55,6 +55,8 @@ private slots:
      */
     void on_pushButtonAddShark_clicked();
 
+    void on_pushButtonReset_clicked();
+
 private:
     /**
      * @brief Render the world in the main window.

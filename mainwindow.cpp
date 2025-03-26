@@ -22,10 +22,9 @@ MainWindow::MainWindow(QWidget *parent)
     int cols = 15;
     cellHeight = this->geometry().height()/rows;
     cellWidth = this->geometry().width()/cols;
-
     m_world.initialize(rows, cols);
-    m_world.addCreatures(CreatureType::fish, 10, /* randomAge */ true);
-    m_world.addCreatures(CreatureType::shark, 5, /* randomAge */ true);
+    m_world.createCreatures(CreatureType::fish, 10, /* randomAge */ true);
+    m_world.createCreatures(CreatureType::shark, 5, /* randomAge */ true);
     initializeWidgets();
     renderWorld();
 
@@ -50,19 +49,26 @@ void MainWindow::renderWorld()
         for (int col = 0; col<cols; col++)
         {
             QPixmap pixmap;
+            QString toolTip;
             if (auto creature = m_world(row,col).getCreature();
                 creature != nullptr)
             {
                 auto resource = QString::fromStdString(creature->getResourcePath());
+                toolTip = resource;
                 pixmap = QPixmap(resource);
             }
             else
             {
                 pixmap = pixmapWater;
-            }            
+                toolTip = ":/water/water-default";
+            }
+
+            // as a rendering optimization, we only set the pixmap if it doesn't match the tooltip currently on the widget
             if (auto *widget = dynamic_cast<QLabel*>(ui->gridLayout->itemAtPosition(row, col)->widget());
-                widget != nullptr)
+                widget != nullptr &&
+                widget->toolTip() != toolTip)
             {
+                widget->setToolTip(toolTip);
                 widget->setPixmap(pixmap.scaled(cellWidth, cellHeight));
             }
         }
@@ -130,12 +136,30 @@ void MainWindow::on_pushButtonSettings_clicked()
 
 void MainWindow::on_pushButtonAddFish_clicked()
 {
-    m_world.addCreatures(CreatureType::fish, 1);
+    m_world.createCreatures(CreatureType::fish, 1);
     renderWorld();
 }
 
 void MainWindow::on_pushButtonAddShark_clicked()
 {
-    m_world.addCreatures(CreatureType::shark, 1);
+    m_world.createCreatures(CreatureType::shark, 1);
     renderWorld();
 }
+
+void MainWindow::on_pushButtonReset_clicked()
+{
+    if (QMessageBox::Ok ==
+        QMessageBox::question(this,
+                              "Confirm",
+                              "Do you want to pause and reset the current simulation?",
+                              QMessageBox::Ok | QMessageBox::Cancel))
+    {
+        tickTimer.stop();
+        ui->pushButtonStartPause->setText("Start");
+        m_world.initialize(m_world.rowCount(), m_world.colCount());
+        m_world.createCreatures(CreatureType::fish, 10, /* randomAge */ true);
+        m_world.createCreatures(CreatureType::shark, 5, /* randomAge */ true);
+        renderWorld();
+    }
+}
+

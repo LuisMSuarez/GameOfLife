@@ -7,15 +7,15 @@ GameOfLifeCore::Creature::Creature(World &world, Cell &cell, uint32_t reproducti
     m_world(world), m_cell(&cell), m_reproductionTicks(reproductionTicks), m_reproductionTimer(startingReproductionTimer), m_max_age(maxAge), m_resourcePath(resourcePath), m_age(startingAge)
 {
     m_taggedForDeletion = false;
-    cell.addCreature(this);
-    world.registerCreature(*this);
+    cell.addCreature(*this);
+    world.addCreature(*this);
 }
 
 void GameOfLifeCore::Creature::moveTo(Cell &cell) noexcept
 {
     assert(cell.getCreature() == nullptr); // the destination cell must not already be occupied by another creature
     m_cell->removeCreature();
-    cell.addCreature(this);
+    cell.addCreature(*this);
     m_cell = &cell;
 }
 
