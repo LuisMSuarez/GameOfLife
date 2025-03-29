@@ -30,6 +30,13 @@ class Creature
         Creature(World &world, Cell &cell, uint32_t reproductionTicks, uint32_t maxAge, std::string resourcePath, uint32_t startingAge = 0, uint32_t startingReproductionTimer = 0) noexcept;
 
         /**
+         * @brief Destructor for the Creature class
+         * Declaring the base class destructor as virtual ensures the call of the derived class destructor,
+         * when an object of the derived class type is destroyed via a pointer or a reference of the base class type.
+         */
+        virtual ~Creature() = default;
+
+        /**
          * @brief Advances the state of the creature by one tick.
          */
         virtual void tick() noexcept;
